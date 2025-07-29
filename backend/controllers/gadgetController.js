@@ -1,4 +1,4 @@
-const Gadget = require("../models/GadgetyModel");
+const Gadget = require("../models/gadgetModel");
 const cloudinary = require("../services/cloudinary"); 
 const getGadgets = async (req, res) => {
   try {

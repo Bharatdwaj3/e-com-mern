@@ -1,4 +1,4 @@
-const Essential = require("../models/EssentialModel");
+const Essential = require("../models/essentialModel");
 
 const getEssentials = async (req, res) => {
   try {

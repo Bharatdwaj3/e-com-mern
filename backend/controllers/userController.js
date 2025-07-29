@@ -1,44 +1,7 @@
 const express=require('express')
-//const User = require("../models/UserModel");
-//const cookieParser=require('cookie-parser');
-//const {v4: uuidv4} = require('uuid');
-//const { route } = require('../routes/usersRoutes');
 const router=express.Router();
 const {ManagementClient}=require('auth0')
 
-
-{/*
-  
-  router.get('/register',(req,res)=>{
-  res.render('register');
-});
-
-
-
-router.get('/profile',async(req,res)=>{
-  const sessionCookie=req.cookies.userSession || '';
-  if(sessionCookie===''){
-    res.redirect('/register');
-    return;
-  }
-  const parts=sessionCookie.split('-');
-  if(parts.length>=2){
-    const username=parts[0];
-    try{
-      const user=await User.findOne({username: username});
-      if(user){
-        res.render('profile',{
-          username:user.username
-        });
-        return;
-      }
-    }catch(error){
-      console.error('Database error: ',error);
-    }
-  }
-  res.redirect('/login');
-});
-*/}
 const getUsers = async (req, res) => {
   try {
     const users = await User.find({});
@@ -100,12 +63,6 @@ const deleteUser = async (req, res) => {
   }
 };
 
-  
-
-
-
-
-
 const management = new ManagementClient({
   domain:process.env.AUTH0_DOMAIN,
   clientId:process.env.AUTH0_CLIENT_ID,
@@ -131,8 +88,6 @@ const updateMetadata=async(req, res)=>{
 }
 
 module.exports = {
-  //getUsers,
-  //getUser,
   createUser,
   updateUser,
   deleteUser,

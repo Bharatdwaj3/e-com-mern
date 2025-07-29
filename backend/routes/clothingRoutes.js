@@ -1,7 +1,7 @@
 const express = require('express');
 const Clothing = require('../models/clothingModel.js');
 const router=express.Router();
-const {getClothings, getClothing, createClothing, updateClothing, deleteClothing} = require('../controllers/clergyController.js');
+const {getClothings, getClothing, createClothing, updateClothing, deleteClothing} = require('../controllers/clothingController.js');
 
 
 router.get('/', getClothings);

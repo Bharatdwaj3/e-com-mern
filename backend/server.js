@@ -5,9 +5,9 @@ const cookieParser = require('cookie-parser');
 require("dotenv").config();
 
 const connectDB=require('./db');
-const monarchyRoutes =require("./routes/monarchyRoutes");
-const clergyRoutes =require("./routes/clergyRoutes");
-const bourgouiseRoutes =require("./routes/bourgouiseRoutes");
+const gadgetRoutes =require("./routes/gadgetRoutes");
+const essentialRoutes =require("./routes/essentialRoutes");
+const clothingRoutes =require("./routes/clothingRoutes");
 const userRoutes =require("./routes/usersRoutes");
 const app=express();
 
@@ -24,9 +24,9 @@ app.get('/',(req,res)=>{
     res.send('Server is ready');
 });
 
-app.use('/monarchs',monarchyRoutes);
-app.use('/clergy',clergyRoutes);
-app.use('/bourgouise',bourgouiseRoutes);
+app.use('/gadgets',gadgetRoutes);
+app.use('/essential',essentialRoutes);
+app.use('/clothing',clothingRoutes);
 app.use('/user',userRoutes);
 
 const port = process.env.PORT || 3005;

@@ -1,28 +1,24 @@
 const mongoose = require('mongoose');
 
 const gadgetSchema=new mongoose.Schema({
-    name:{
+    type:{
         type:String,
         required:true
     },
-    title:{
+    port:{
         type:String,
         required:true
     },
-    dob:{
-        type:Date,
-        required:true
-    },
-    dod:{
-        type:Date,
-        required:true
-    },
-    alive:{
+    wired:{
         type:Boolean,
         required:true
     },
-    religion:{
-        type:String,
+    display:{
+        type:Boolean,
+        required:true
+    },
+    storage:{
+        type:Number,
         required:true
     },
     imageUrl:{

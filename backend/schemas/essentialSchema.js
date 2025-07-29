@@ -1,33 +1,35 @@
 const mongoose = require('mongoose');
 
 const essentialSchema=new mongoose.Schema({
-    name:{
+    product_type:{
         type:String,
         required:true
     },
-    title:{
+    brand:{
         type:String,
         required:true
     },
-    Hpst:{
+    material:{
         type:String,
         required:true
     },
-    dob:{
+    color:{
         type:Date,
         required:true
     },
-    dod:{
+    usage:{
         type:Date,
         required:true
     },
-    alive:{
+    power:{
         type:Boolean,
         required:true
     },
-    religion:{
-        type:String,
-        required:true
+     imageUrl:{
+        type:String
+    },
+    cloudinaryId:{
+        type:String
     }
 });
 

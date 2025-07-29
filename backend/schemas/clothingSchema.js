@@ -1,33 +1,30 @@
 const mongoose = require('mongoose');
 
 const clothingSchema=new mongoose.Schema({
-    name:{
+    type:{
         type:String,
         required:true
     },
-    city:{
+    size:{
         type:String,
         required:true
     },
-    occupation:{
+    brand:{
         type:String,
         required:true
     },
-    dob:{
+    color:{
         type:Date,
         required:true
     },
-    dod:{
+    material:{
         type:Date,
         required:true
+    }, imageUrl:{
+        type:String
     },
-    alive:{
-        type:Boolean,
-        required:true
-    },
-    religion:{
-        type:String,
-        required:true
+    cloudinaryId:{
+        type:String
     }
 });
 
