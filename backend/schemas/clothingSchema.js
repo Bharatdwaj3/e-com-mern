@@ -14,11 +14,11 @@ const clothingSchema=new mongoose.Schema({
         required:true
     },
     color:{
-        type:Date,
+        type:String,
         required:true
     },
     material:{
-        type:Date,
+        type:String,
         required:true
     }, imageUrl:{
         type:String

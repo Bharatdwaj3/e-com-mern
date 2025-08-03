@@ -41,7 +41,7 @@ const Profile = () => {
   const updateUserMetaData = async (newData) => {
     try {
       const token = await getAccessTokenSilently();
-      const response = await fetch("http://localhost:4000/user/update-metadata", {
+      const response = await fetch("http://localhost:4001/user/update-metadata", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

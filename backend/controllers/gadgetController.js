@@ -12,8 +12,8 @@ const getGadgets = async (req, res) => {
 const getGadget = async (req, res) => {
   try {
     const { id } = req.params;
-    const Gadget = await Gadget.findById(id);
-    res.status(200).json(Gadget);
+    const Gadgetitem = await Gadget.findById(id);
+    res.status(200).json(Gadgetitem);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -22,13 +22,13 @@ const getGadget = async (req, res) => {
 const createGadget = async (req, res) => {
 
   try{
-    const GadgetData=req.body;
+    const gadgetData=req.body;
     if(req.file){
-      GadgetData.imageUrl=req.file.path;
-      GadgetData.cloudinaryId=req.file.filename;
+      gadgetData.imageUrl=req.file.path;
+      gadgetData.cloudinaryId=req.file.filename;
     }    
-    const Gadget =  await Gadget.create(GadgetData);
-    res.status(201).json(Gadget);
+    const gadget =  await Gadget.create(gadgetData);
+    res.status(201).json(gadget);
   }catch(error){
     console.error("Error creating Gadget: ".error);
     res.status(500).json({message: error.message});
@@ -47,13 +47,13 @@ const updateGadget = async (req, res) => {
       updateData.cloudinaryId=req.file.filename;
     }
 
-    const Gadget = await Gadget.findByIdAndUpdate(id, updateData, {new: true});
+    const gadget = await Gadget.findByIdAndUpdate(id, updateData, {new: true});
 
-    if (!Gadget) {
+    if (!gadget) {
       return res.status(404).json({ message: "Gadget not found" });
     }
 
-    res.status(200).json(Gadget);
+    res.status(200).json(gadget);
   } catch (error) {
     console.error("Error updating Gadget: ",error);
     res.status(500).json({ message: error.message });
@@ -64,14 +64,14 @@ const deleteGadget = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const Gadget = await Gadget.findByIdAndDelete(id);
+    const gadget = await Gadget.findByIdAndDelete(id);
 
-    if (!Gadget) {
+    if (!gadget) {
       return res.status(404).json({ message: "Gadget not found" });
     }
 
-    if(Gadget.cloudinaryId){
-      await cloudinary.uploader.destroy(Gadget.cloudinaryId);
+    if(gadget.cloudinaryId){
+      await cloudinary.uploader.destroy(gadget.cloudinaryId);
     }
 
     res.status(200).json({ message: "Gadget deleted successfully" });

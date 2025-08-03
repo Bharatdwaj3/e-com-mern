@@ -1,5 +1,5 @@
 const Essential = require("../models/essentialModel");
-
+const cloudinary = require("../services/cloudinary"); 
 const getEssentials = async (req, res) => {
   try {
     const Essentials = await Essential.find({});
@@ -12,35 +12,49 @@ const getEssentials = async (req, res) => {
 const getEssential = async (req, res) => {
   try {
     const { id } = req.params;
-    const Essential = await Essential.findById(id);
-    res.status(200).json(Essential);
+    const essentialitem = await Essential.findById(id);
+    res.status(200).json(essentialItem);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
 const createEssential = async (req, res) => {
-  try {
-    const Essential = await Essential.create(req.body);
-    res.status(200).json(Essential);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
 
+  try{
+    const essentialData=req.body;
+    if(req.file){
+      essentialData.imageUrl=req.file.path;
+      essentialData.cloudinaryId=req.file.filename;
+    }    
+    const essential =  await Essential.create(essentialData);
+    res.status(201).json(essential);
+  }catch(error){
+    console.error("Error creating Essential Item: ",error);
+    res.status(500).json({message: error.message});
+  }
+}
 const updateEssential = async (req, res) => {
   try {
     const { id } = req.params;
+    const updateData = req.body;
 
-    const Essential = await Essential.findByIdAndUpdate(id, req.body);
+   
 
-    if (!Essential) {
-      return res.status(404).json({ message: "Essential not found" });
+    if(req.file){
+      updateData.imageUrl=req.file.path;
+      updateData.cloudinaryId=req.file.filename;
     }
 
-    const updatedEssential = await Essential.findById(id);
-    res.status(200).json(updatedEssential);
+    const essential = await Essential.findByIdAndUpdate(id, updateData, {new: true});
+
+    if (!essential) {
+      return res.status(404).json({ message: "Essential Item not found" });
+    }
+
+    res.status(200).json(essential);
   } catch (error) {
+    console.error("Error updating Essential: ",error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -49,14 +63,19 @@ const deleteEssential = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const Essential = await Essential.findByIdAndDelete(id);
+    const essential = await Essential.findByIdAndDelete(id);
 
-    if (!Essential) {
-      return res.status(404).json({ message: "Essential not found" });
+    if (!essential) {
+      return res.status(404).json({ message: "Essential Item not found" });
     }
 
-    res.status(200).json({ message: "Essential deleted successfully" });
+    if(essential.cloudinaryId){
+      await cloudinary.uploader.destroy(essential.cloudinaryId);
+    }
+
+    res.status(200).json({ message: "Essential item deleted successfully" });
   } catch (error) {
+    console.error("Error deleting Essential Item: ",error);
     res.status(500).json({ message: error.message });
   }
 };
