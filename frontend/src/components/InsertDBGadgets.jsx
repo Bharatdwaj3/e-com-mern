@@ -22,7 +22,7 @@ const InsertDBGadgets = () => {
             formData.append('storage',storage);
             formData.append('port',port);
             if(image) formData.append('image',image);
-          const response= await axios.post(`http://localhost:4001/gadgets/`,formData,{
+          const response= await axios.post(`http://localhost:4001/product/gadgets/`,formData,{
             headers:{
               'Content-type':'multipart/form-data'
             }

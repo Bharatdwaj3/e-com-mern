@@ -3,7 +3,7 @@ import {Header, Footer} from '../components/index'
 import { Clothing, Essential, Gadgets } from '../components/Products/index'
 
 
-const Chrcts = () => {
+const Product = () => {
   return (
     <>
       <div className="relative  h-[8000px] w-screen bg-sky-100 mt-[70px]">
@@ -17,4 +17,4 @@ const Chrcts = () => {
   )
 }
 
-export default Chrcts
+export default Product

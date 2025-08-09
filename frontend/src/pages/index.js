@@ -1,6 +1,5 @@
 import Home from './Home';
 import About from './About';
-import Community from './Community';
-import Chrcts from './Chrcts';
+import Product from './Product';
 
-export {Home, About, Community,Chrcts};
+export {Home, About, Product};

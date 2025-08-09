@@ -12,7 +12,7 @@ const Essential = () => {
   const [essentials, setEssentials] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://localhost:4001/essential/`)
+      .get(`http://localhost:4001/product/essential/`)
       .then((response) => {
         setEssentials(response.data);
       })

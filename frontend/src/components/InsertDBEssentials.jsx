@@ -24,7 +24,7 @@ const InsertDBEssentials = () => {
             formData.append('brand',brand);
             formData.append('power',power);
             if(image) formData.append('image',image);
-          const response= await axios.post(`http://localhost:4001/essential/`,formData,{
+          const response= await axios.post(`http://localhost:4001/product/essential/`,formData,{
             headers:{
               'Content-type':'multipart/form-data'
             }

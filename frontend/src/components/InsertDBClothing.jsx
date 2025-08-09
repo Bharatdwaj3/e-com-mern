@@ -22,7 +22,7 @@ const InsertDBClothing = () => {
             formData.append('material',material);
             formData.append('size',size);
             if(image) formData.append('image',image);
-          const response= await axios.post(`http://localhost:4001/clothing/`,formData,{
+          const response= await axios.post(`http://localhost:4001/product/clothing/`,formData,{
             headers:{
               'Content-type':'multipart/form-data'
             }

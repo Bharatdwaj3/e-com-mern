@@ -15,7 +15,7 @@ const Clothing = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4001/clothing/`)
+      .get(`http://localhost:4001/product/clothing/`)
       .then((response) => {
         setClothing(response.data);
       })

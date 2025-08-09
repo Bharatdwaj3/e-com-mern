@@ -9,19 +9,22 @@ import CardActionArea from "@mui/material/CardActionArea";
 import CardActions from "@mui/material/CardActions";
 import Box from "@mui/material/Box";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const Gadgets = () => {
   const [gadgets, setGadgets] = useState([])
-
+  const navigate = useNavigate();
   useEffect(() => {
     axios
-      .get(`http://localhost:4001/gadgets/`)
+      .get(`http://localhost:4001/product/gadgets/`)
       .then((response) => {
         setGadgets(response.data);
       })
       .catch((error) => {
         console.error("Error fetching gadget", error);
       });
-  }, );
+  },[]);
+
+
   return (
     <>
       <div className="relative  h-[1500px] w-screen bg-amber-100 mt-[70px]">
@@ -75,8 +78,15 @@ const Gadgets = () => {
                 </CardContent>
                 <CardActionArea>
                   <CardActions>
-                    <Button size="small" color="primary">
-                      View Details
+                    <Button 
+                      size="small" 
+                      color="primary"
+                      onClick={()=>{
+                        console.log('Navigating to:', `/product/gadgets/${gadget._id}`);
+                        navigate(`/product/gadgets/${gadget._id}`)}
+                      } 
+                    >
+                        View Details
                     </Button>
                   </CardActions>
                 </CardActionArea>
