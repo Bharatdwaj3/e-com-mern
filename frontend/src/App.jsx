@@ -1,5 +1,6 @@
 import {Clothing, Essential, Gadgets, Details} from './components/Products/index'
-import { Navbar } from './components';
+import  Navbar  from './components/Navbar';
+import Cart from './components/Cart';
 import {Home, About, Product} from './pages/index';
 import { BrowserRouter as Router, Routes, Route  } from 'react-router-dom'
 import Login from './pages/Login';
@@ -17,7 +18,7 @@ function App() {
         <Navbar/>
         <Routes>
           <Route path='/' element={<Home/> }/>  
-            
+            <Route path='/cart' element={<Cart/>}/>
             <Route path='/product/gadgets' element={<Gadgets/>}/>
             <Route path='/product/gadgets/:id' element={<Details/>}/>    
             

@@ -2,6 +2,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Footer } from "../../components/index";
+import { toast } from "react-toastify";
 
 import {
   Card,
@@ -47,6 +48,23 @@ const Details = () => {
       .then((response) => setGadget(response.data))
       .catch((error) => console.error("Error: ", error));
   }, [id]);
+
+  const handleAddToCart=()=>{
+    if(!gadget) return;
+    const cartItems=JSON.parse(localStorage.getItem("cartItems") || "[]");
+    const existingItemIndex=cartItems.findIndex(item=>item.id === gadget._id);
+    if(existingItemIndex >= 0){
+      cartItems[existingItemIndex].quantity+=1;
+    }else{
+      cartItems.push({
+        id: gadget._id,
+        quantity:1,
+        addedAt:new Date().toString()
+      });
+    }
+    localStorage.setItem("cartItems",JSON.stringify(cartItems));
+    toast.success("item added to cart!!");
+  }
 
   if (!gadget) {
     return (
@@ -346,6 +364,7 @@ const Details = () => {
                   startIcon={<ShoppingCart/>}
                   className="bg-cyan-600 hover:bg-cyan-700 px-8 py-4 text-lg font-semibold"
                   size="large"
+                  onClick={handleAddToCart}
                 >
                   Add to Cart
                 </Button>

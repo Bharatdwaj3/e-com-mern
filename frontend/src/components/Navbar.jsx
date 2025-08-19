@@ -18,7 +18,7 @@ const Navbar = () => {
             <Link to="/" className="hover:text-gray-950">Home</Link>
             <Link to="/product" className="hover:text-gray-50">Products</Link>
             <Link to="/about" className="hover:text-gray-50">About</Link>
-            <Link to={isLoggedIn ?  "/profile" : "/test"} className="hover:text-gray-50">User</Link>
+            <Link to={isLoggedIn ?  "/profile" : "/login"} className="hover:text-gray-50">User</Link>
           </nav>
         </div>
     </>
