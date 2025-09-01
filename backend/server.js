@@ -9,6 +9,8 @@ const gadgetRoutes =require("./routes/gadgetRoutes");
 const essentialRoutes =require("./routes/essentialRoutes");
 const clothingRoutes =require("./routes/clothingRoutes");
 const userRoutes =require("./routes/usersRoutes");
+const paymentRoutes = require("./routes/paymentRoutes");
+
 const app=express();
 
 connectDB();
@@ -28,6 +30,8 @@ app.use('/product/gadgets',gadgetRoutes);
 app.use('/product/essential',essentialRoutes);
 app.use('/product/clothing',clothingRoutes);
 app.use('/user',userRoutes);
+app.use('/api/payments', paymentRoutes);
+
 
 const port = process.env.PORT || 3005;
 

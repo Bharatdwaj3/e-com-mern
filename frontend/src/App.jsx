@@ -1,6 +1,7 @@
-import {Clothing, Essential, Gadgets, Details} from './components/Products/index'
+import {Clothing, Essential, Gadgets} from './components/Products/index'
+import ProductDetails from './pages/ProductDetails';
 import  Navbar  from './components/Navbar';
-import Cart from './components/Cart';
+//import CartP from './components/Cart';
 import {Home, About, Product} from './pages/index';
 import { BrowserRouter as Router, Routes, Route  } from 'react-router-dom'
 import Login from './pages/Login';
@@ -8,6 +9,7 @@ import Profile from './pages/Profile';
 import InsertDBGadgets from './components/InsertDBGadgets'
 import InsertDBClothing from './components/InsertDBClothing';
 import InsertDBEssentials from './components/InsertDBEssentials';
+import CartPage from './pages/CartPage';
 
 
 function App() {
@@ -18,15 +20,15 @@ function App() {
         <Navbar/>
         <Routes>
           <Route path='/' element={<Home/> }/>  
-            <Route path='/cart' element={<Cart/>}/>
+            <Route path='/cart' element={<CartPage/>}/>
             <Route path='/product/gadgets' element={<Gadgets/>}/>
-            <Route path='/product/gadgets/:id' element={<Details/>}/>    
+            <Route path='/product/gadgets/:id' element={<ProductDetails/>}/>    
             
             <Route path='/product/essential' element={<Essential/>}/>
-            <Route path='/product/essential/:id' element={<Details/>}/>    
+            <Route path='/product/essential/:id' element={<ProductDetails/>}/>    
             
             <Route path='/product/clothing' element={<Clothing/>}/>  
-            <Route path='/product/clothing/:id' element={<Details/>}/>  
+            <Route path='/product/clothing/:id' element={<ProductDetails/>}/>  
             
             <Route path='/product' element={<Product/>}/>       
             

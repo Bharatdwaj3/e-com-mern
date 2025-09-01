@@ -62,6 +62,7 @@ const useCartData = () => {
         );
         return {
           ...response.data,
+          id:cartItem.id || `item_${Date.now()}_${Math.random}`,
           price: Math.floor(Math.random() * 200) + 50,
           addedAt: cartItem.addedAt || new Date().toISOString(),
         };
@@ -196,13 +197,13 @@ const Cart = () => {
   if (isLoading) {
     return (
       <div className="w-full">
-        <Box className="min-h-screen bg-gradiengt-to-br from -sky-50 to-blue-100 mt-[70px]">
+        <Box className="min-h-screen bg-gradient-to-br from -sky-50 to-blue-100 mt-[70px]">
           <Container maxWidth="xl" className="py-8 px-4">
             <Card className='shadow-lg mb-6 overflow-hidden'>
               <CardContent className="p-8">
                 <CardContent className="p-8">
-                  <Skeleton variant="text" wdith={300} height={40} />
-                  <Skeleton variant="text" wdith={150} height={30} />
+                  <Skeleton variant="text" width={300} height={40} />
+                  <Skeleton variant="text" width={150} height={30} />
                 </CardContent>
               </CardContent>
             </Card>
@@ -247,7 +248,7 @@ const Cart = () => {
   if (error) {
     return (
       <div className="w-full">
-        <Box container="min-h-screen bg-gradient-to-bt from-sky-50 to-blue-100 mt-[70px]">
+        <Box container="min-h-screen bg-gradient-to-br from-sky-50 to-blue-100 mt-[70px]">
           <Container maxWidth="xl" className="py-8 px-4">
             <Card className="shadow-lg text-center">
               <CardContent className="p-12">
@@ -257,12 +258,12 @@ const Cart = () => {
                 <Typography variant="h4" className="text-red-600 mb-4">
                   Error Loading Cart
                 </Typography>
-                <Typography variant="body1" className="text-gray-900-500 mb-6">
+                <Typography variant="body1" className="text-gray-500 mb-6">
                   {error.message}
                 </Typography>
                 <Button
                   variant="contained"
-                  onClick={() => queryClient.invalidateQueries(["cartItem"])}
+                  onClick={() => queryClient.invalidateQueries(["cartItems"])}
                   className="bg-cyan-600 hover:bg-cyan-700"
                 >
                   Try Again
@@ -301,7 +302,7 @@ const Cart = () => {
                     Your Cart is empty
                   </Typography>
                   <Typography variant="body1" className="text-gray-500 mb-6">
-                    Discover amazing producst and add them to your card!!
+                    Discover amazing products and add them to your card!!
                   </Typography>
                   <motion.div
                     variants={buttonVariants}
@@ -338,7 +339,7 @@ const Cart = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <Card container="shadow-lg mb-6 overflow-hidden">
+              <Card className="shadow-lg mb-6 overflow-hidden">
                 <CardContent className="p-8">
                   <Box className="flex items-center justify-between">
                     <Box className="flex items-center gap-3">
@@ -386,7 +387,6 @@ const Cart = () => {
             </motion.div>
 
             <Grid container spacing={4}>
-              ~
               <Grid className="shadow-lg">
                 <CardContent className="p-6">
                   <Typography
@@ -427,7 +427,7 @@ const Cart = () => {
                                   </Paper>
                                 </motion.div>
                               </Grid>
-                              <Grid item sx={12} sm={4}>
+                              <Grid item xs={12} sm={4}>
                                 <Typography
                                   variant="h6"
                                   className="text-gray-800 font-semibold"
@@ -517,13 +517,13 @@ const Cart = () => {
                                     inputProps={{
                                       min: 1,
                                       style: { textAlign: "center" },
-                                      "aria-lable": `Quantity for ${item.type}`,
+                                      "aria-label": `Quantity for ${item.type}`,
                                     }}
                                     allowNegative={false}
                                     decimalScale={0}
                                   />
 
-                                  <Tooltip title="Increase quanity">
+                                  <Tooltip title="Increase quantitty">
                                     <motion.div
                                       variants={buttonVariants}
                                       whileHover="hover"
@@ -553,7 +553,7 @@ const Cart = () => {
                                   <NumericFormat
                                     value={item.price * item.quantity}
                                     displayType="text"
-                                    thousandSeperator=" ,"
+                                    thousandSeparator=" ,"
                                     prefix="$"
                                     decimalScale={2}
                                     fixedDecimalScale
@@ -569,7 +569,7 @@ const Cart = () => {
                                   <NumericFormat
                                     value={item.price}
                                     displayType="text"
-                                    thousandSeperator=" ,"
+                                    thousandSeparator=" ,"
                                     prefix="$"
                                     decimalScale={2}
                                     fixedDecimalScale
@@ -623,7 +623,7 @@ const Cart = () => {
             <Grid>
               <Grid item xs={12} md={4}>
               <motion.div
-                initial={{ capacity: 0, x: 20 }}
+                initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
@@ -653,7 +653,7 @@ const Cart = () => {
                               <NumericFormat
                                 value={subtotal}
                                 displayType="text"
-                                thousandSeperator=" ,"
+                                thousandSeparator=" ,"
                                 prefix="$"
                                 decimalScale={2}
                                 fixedDecimalScale
@@ -720,14 +720,14 @@ const Cart = () => {
                               <NumericFormat
                                 value={total}
                                 displayType="text"
-                                thousandSeperator=","
+                                thousandSeparator=","
                                 prefix="$"
                                 decimalScale={2}
                                 fixedDecimalScale
                                 renderText={(formattedValue) => (
                                   <Typography
                                     variant="h5"
-                                    className="text-green-600 font-"
+                                    className="text-green-600 font-bold"
                                   >
                                     {formattedValue}
                                   </Typography>
@@ -745,7 +745,7 @@ const Cart = () => {
                         whileTap="tap"
                       >
                         <Button
-                          variant="contained"
+                          variants="contained"
                           startIcon={<CreditCard/>}
                           className="bg-green-600 hover:bg-green-700 w-full py-3 text-lg font-semibold"
                           size="large"
@@ -753,7 +753,7 @@ const Cart = () => {
                             toast.success("Prodeeding to checkout!")
                           }
                         >
-                          Proceed to Chceckout
+                          Proceed to Checkout
                         </Button>
                       </motion.div>
                       <motion.div
@@ -809,7 +809,7 @@ const Cart = () => {
             </Grid>
           </Container>
         </Box>
-        <Footer />
+        
         <ToastContainer
           position="bottom-right"
           autoClose={3000}
