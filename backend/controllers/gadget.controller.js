@@ -1,5 +1,5 @@
-const Gadget = require("../models/gadgetModel");
-const cloudinary = require("../services/cloudinary"); 
+const Gadget = require("../models/gadget.model");
+const cloudinary = require("../services/cloudinary.service"); 
 const getGadgets = async (req, res) => {
   try {
     const Gadgets = await Gadget.find({});

@@ -12,7 +12,7 @@ import './index.css'
 import App from './App.jsx'
 
 const queryClient=new QueryClient({
-  defaultOPtions:{
+  defaultOptions:{
     queries:{
       staleTime:60*1000,
       cacheTime: 10*60*1000,
@@ -29,7 +29,7 @@ createRoot(document.getElementById('root')).render(
       authorizationParams={{
         redirect_uri:window.location.origin,
         audience:audience,
-        scope:"openid profile email"
+        scope:"openid profile email offline_access"
       }}
     >
        <App />

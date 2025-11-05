@@ -1,5 +1,5 @@
 const express = require('express');
-const upload=require('./multer');
+const upload=require('./multer.js');
 const router=express.Router();
 const {getClothings, getClothing, createClothing, updateClothing, deleteClothing} = require('../controllers/clothingController.js');
 

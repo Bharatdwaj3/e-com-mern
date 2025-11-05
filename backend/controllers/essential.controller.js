@@ -1,5 +1,5 @@
-const Essential = require("../models/essentialModel");
-const cloudinary = require("../services/cloudinary"); 
+const Essential = require("../models/essential.model");
+const cloudinary = require("../services/cloudinary.service"); 
 const getEssentials = async (req, res) => {
   try {
     const Essentials = await Essential.find({});

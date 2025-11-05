@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const orderSchema = require('../schemas/orderSchema');
+const orderSchema = require('../schemas/order.schema');
 
 orderSchema.methods.markAsPaid=function(paymentId, signature, method){
     this.paymentId=paymentId;

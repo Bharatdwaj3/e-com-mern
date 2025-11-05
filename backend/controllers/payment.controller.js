@@ -1,6 +1,6 @@
 const Razorpay = require('razorpay');
 const crypto=require('crypto')
-const Order=require('../models/orderModel');
+const Order=require('../models/order.model');
 const { error } = require('console');
 
 const razorpay=new Razorpay({
