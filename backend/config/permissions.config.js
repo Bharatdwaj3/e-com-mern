@@ -1,46 +1,70 @@
-const PERMISSIONS ={
-    admin:[
-        'update_patient',
+const PERMISSIONS = {
+    admin: [
+        // User management
         'manage_users',
-        'create_subject',
-        'view_subjects',
-        'update_subject',
-        'delete_subject',
-        'create_patient',
-        'view_patients',
-        'update_patient',
-        'delete_patient',
-        'create_doctor',
-        'view_doctors',
-        'update_doctor',
-        'delete_doctor',
-        'view-self',
-        'update-self'
-    ],
-    doctor:[
-        'view_subjects',
-        'view_patients',
-        'update_subject',
-        'update_patient',
-        'view-self',
-        'update-self',
-        'view_doctors'
-        
-    ],
-    patient:[
-        
-        'view_subjects',
-        'assign_subject',
-        'view-self',
-        'update_subject',
-        'view_patients',
-        'view_patient',
-        'update-self',
+        'view_users',
+        'delete_user',
 
-        'create_subject',
-        'update_subject',
-        'delete_subject'
-    ],
-}
+        // Product management
+        'create_product',
+        'view_products',
+        'update_product',
+        'delete_product',
+        
 
-module.exports=PERMISSIONS;
+        // Order management
+        'view_orders',
+        'update_order_status',
+        'delete_order',
+        'update_seller',
+
+        // Payment management
+        'view_payments',
+
+        //Customer Management
+        'view_customers',
+        'view_customer',
+        'delete_customer',
+
+        // Self
+        'view_self',
+        'update_self'
+    ],
+
+    seller: [
+        // Product management (only their own)
+        'create_product',
+        'view_products',
+        'update_product',
+        'delete_product',
+
+        // Orders related to their products
+        'view_orders',
+        'update_order_status',
+
+        // Self
+        'view_self',
+        'update_self',
+        //Customer Management
+        'view_sellers',
+        'view_customers'
+    ],
+
+    customer: [
+        // Browsing & purchasing
+        'view_products',
+        'create_order',
+        'view_orders',
+        'make_payment',
+        'view_payments',
+
+        
+
+        // Self
+        'view_self',
+        'update_self',
+        'view_customer'
+    ]
+};
+
+module.exports = PERMISSIONS;

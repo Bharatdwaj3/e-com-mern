@@ -1,31 +1,48 @@
-const jwt=require('jsonwebtoken');
-const {JWT_SECRECT}=require('../config/env.config');
+const jwt = require('jsonwebtoken');
+const { JWT_ACC_SECRECT } = require('../config/env.config');
 
-const roleMiddleware=(allowedRoles=[])=>{
-    return(req, res, next)=>{
-        const authHeader=req.headers['authorization'];
-    if(!authHeader){
-        return res.status(401).json({message: 'No token, authorization denied'});
-    }
-    const token=authHeader.split(' ')[1];
-    if(!token){
-        return res.status(401).json({message: 'No token, authorization denied'});
-    }
-    try{
-        const decoded=jwt.verify(token, JWT_SECRECT);
-        req.user=decoded.user;
-        req.role = req.user.accountType;
-        console.log('Decoded user:', req.user);
-       if(allowedRoles.length && !allowedRoles.includes(req.user.accountType)){
-            return res.status(403).json({message: 'Access denied insuffient role'})
-       }
-        next();
-    }catch(error){
-        console.error('Token verification error:', error.message);
-        res.status(401).json({message: 'Token not valid'});
-    }
-    }
+const roleMiddleware = (allowedRoles = []) => {
+  return (req, res, next) => {
+
     
+    if (req.user && req.user.accountType) {
+      req.role = req.user.accountType;
+      if (allowedRoles.length && !allowedRoles.includes(req.role)) {
+        return res.status(403).json({ message: 'Access denied insufficient role' });
+      }
+      return next();  
+    }
+
+    let token = null;
+
+    const authHeader = req.headers['authorization'];
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      token = authHeader.split(' ')[1];
+    }
+
+    if (!token && req.cookies?.accessToken) {
+      token = req.cookies.accessToken;
+    }
+
+    if (!token) {
+      return res.status(401).json({ message: 'No token, authorization denied' });
+    }
+
+    try {
+      const decoded = jwt.verify(token, JWT_ACC_SECRECT);
+      req.user = decoded.user;
+      req.role = req.user.accountType;
+
+      if (allowedRoles.length && !allowedRoles.includes(req.user.accountType)) {
+        return res.status(403).json({ message: 'Access denied insufficient role' });
+      }
+
+      next();
+    } catch (error) {
+      console.error('Token verification error:', error.message);
+      return res.status(401).json({ message: 'Token not valid' });
+    }
+  };
 };
 
-module.exports=roleMiddleware;
+module.exports = roleMiddleware;

@@ -34,7 +34,7 @@ const userSchema=new mongoose.Schema({
     type: String,
     required: [true, 'Account type required'],
     enum: {
-            values: ['patient', 'doctor', 'admin'],
+            values: ['seller', 'customer', 'admin'],
             message: 'Invalid account type'
         }
     },

@@ -1,5 +1,5 @@
 
-import {discord, mastadon, reddit, telegram} from '../assets/index'
+import {discord, mastadon, reddit, telegram} from '../../assets/index'
 const Hero_Community = () => {
   return (
     <>

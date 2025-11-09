@@ -9,14 +9,11 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')
 const dbMiddleware =require('./middleware/db.middleware');
 
-const {handleAuthError} = require('./services/auth');
-
-
-const gadgetRoutes =require("./routes/gadgetRoutes");
-const essentialRoutes =require("./routes/essentialRoutes");
-const clothingRoutes =require("./routes/clothingRoutes");
-const userRoutes =require("./routes/usersRoutes");
-const paymentRoutes = require("./routes/paymentRoutes");
+const productRoutes =require("./routes/product.routes");
+const sellerRoutes =require("./routes/seller.routes");
+const customerRoutes =require("./routes/customer.routes");
+const userRoutes =require("./routes/user.routes");
+const paymentRoutes = require("./routes/payment.routes");
 
 const { PORT, SESSION_SECRECT, MONGO_URI } = require('./config/env.config');
 const connectDB=require('./config/db.config');
@@ -50,13 +47,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/',(req,res)=>{res.send('Server is ready');});
-app.use('/api/product/gadgets',gadgetRoutes);
-app.use('/api/product/essential',essentialRoutes);
-app.use('/api/product/clothing',clothingRoutes);
-app.use('/api//user',userRoutes);
-app.use('/api/payments', paymentRoutes);
-app.use(dbMiddleware);
 
-const port = process.env.PORT || 3005;
+app.use('/api/product',productRoutes);
+app.use('/api/user/customer',customerRoutes);
+app.use('/api/user/seller',sellerRoutes);
+app.use('/api/user',userRoutes);
+app.use('/api/payments', paymentRoutes);
+
+app.use(dbMiddleware);
 
 app.listen(PORT, () => console.log('Server Started at port : ',PORT));

@@ -4,7 +4,7 @@ const {
     verifyPayment,
     handlePaymentFailure,
     getOrderStatus,
-}=require('../controllers/paymentController');
+}=require('../controllers/payment.controller');
 
 const router = express.Router();
 
