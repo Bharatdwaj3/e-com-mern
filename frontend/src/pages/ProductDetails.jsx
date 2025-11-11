@@ -1,5 +1,5 @@
 import React from 'react'
-import {Header, Footer} from '../components/index'
+import {Footer} from '../components/layout/index'
 import {Details} from '../components/Products/index'
 
 const ProductDetails = () => {

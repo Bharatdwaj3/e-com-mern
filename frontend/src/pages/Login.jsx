@@ -1,8 +1,7 @@
 import React from 'react'
 //import { useNavigate } from 'react-router-dom'
-import {Header, Footer, Content} from '../components/index'
-//import AuthComponent from '../components/AuthComponent'
-import AuthComp from '../components/AuthComp'
+import {Header, Footer} from '../components/layout/index'
+import {AuthComp} from '../components/auth/index'
 
 //import { isAuthenticated } from '../utils/auth'
 

@@ -16,19 +16,15 @@ router.get('/',
     roleMiddleware(['admin','seller','customer']),
     checkPermission('view_products'),
     getProducts);
-router.post('/:userId',
+router.post('/',
     authMiddleware,
-    roleMiddleware(['customer','admin']),
+    roleMiddleware(['seller','admin']),
     checkPermission('create_product'),
     createProduct);
-router.put('/:id',
-    authMiddleware,
-    roleMiddleware(['customer','admin']),
-    checkPermission('update_product'),
-    updateProduct);
+    
 router.delete('/:id',
     authMiddleware,
-    roleMiddleware(['customer','admin']),
+    roleMiddleware(['seller','admin']),
     checkPermission('delete_product'),
     deleteProduct);
 

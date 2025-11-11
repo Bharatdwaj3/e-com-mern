@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import{motion, AnimatePresence  } from "framer-motion";
+import{AnimatePresence  } from "framer-motion";
 import { debounce } from "lodash";
 import { format } from "date-fns";
 import { Footer } from '../components/index';

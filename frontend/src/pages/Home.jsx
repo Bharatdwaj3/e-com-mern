@@ -1,5 +1,5 @@
 import React from 'react'
-import {Header, Footer, Content} from '../components/index'
+import {Header, Footer, Content} from '../components/layout/index'
 
 const Home = () => {
   return (

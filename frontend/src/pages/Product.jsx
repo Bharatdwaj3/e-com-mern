@@ -1,5 +1,5 @@
 import React from 'react'
-import {Header, Footer} from '../components/index'
+import {Header, Footer} from '../components/layout/index'
 import { Clothing, Essential, Gadgets } from '../components/Products/index'
 
 

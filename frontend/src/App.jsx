@@ -1,15 +1,12 @@
 import {Clothing, Essential, Gadgets} from './components/Products/index'
-import ProductDetails from './pages/ProductDetails';
-import  Navbar  from './components/Navbar';
-//import CartP from './components/Cart';
+import {ProductDetails} from './pages/index';
+import  {Navbar}  from './components/layout/index';
 import {Home, About, Product} from './pages/index';
 import { BrowserRouter as Router, Routes, Route  } from 'react-router-dom'
-import Login from './pages/Login';
-import Profile from './pages/Profile';
-import InsertDBGadgets from './components/InsertDBGadgets'
-import InsertDBClothing from './components/InsertDBClothing';
-import InsertDBEssentials from './components/InsertDBEssentials';
-import CartPage from './pages/CartPage';
+import {Login, Signin} from './components/auth/index';
+import Profile from './pages/index';
+import {InsertDBEssentials, InsertDBGadgets, InsertDBClothing, } from './components/insertForms/index'
+import {CartPage} from './pages/index';
 
 
 function App() {
@@ -34,6 +31,7 @@ function App() {
             
             <Route path='/about' element={<About/>} />
             <Route path='/login' element={<Login/>} />
+            <Route path='/signin' element={<Signin/>} />
             <Route path='/profile' element={<Profile/>} />
             <Route path='/inC' element={<InsertDBClothing/>} />
             <Route path='/inE' element={<InsertDBEssentials/>} />

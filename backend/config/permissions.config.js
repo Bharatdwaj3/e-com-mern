@@ -4,13 +4,13 @@ const PERMISSIONS = {
         'manage_users',
         'view_users',
         'delete_user',
-
+        'view_sellers',
         // Product management
         'create_product',
         'view_products',
         'update_product',
         'delete_product',
-        
+        'delete_seller',
 
         // Order management
         'view_orders',
@@ -47,6 +47,8 @@ const PERMISSIONS = {
         'update_self',
         //Customer Management
         'view_sellers',
+        'create_product',
+        'delete_product',
         'view_customers'
     ],
 

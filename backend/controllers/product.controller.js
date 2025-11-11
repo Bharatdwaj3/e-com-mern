@@ -20,49 +20,107 @@ const getProduct = async (req, res) => {
 };
 
 const createProduct = async (req, res) => {
-
-  try{
-
-    const {userId}=req.params;
-    const {name, code, dept}=req.body;
-    if(req.user.id.toString()!==userId){
-      return res.status(403).json({message: "You can only create Products for yourself!"})
+  try {
+    const { type, brand, usage } = req.body;
+    if (!type || !brand || !usage) {
+      return res.status(400).json({
+        success: false,
+        message: 'type, brand, usage required',
+        code: 'MISSING_FIELDS'
+      });
     }
 
-    const ProductData = await Product.create({
-      userId,
-      name,
-      code, dept
+    const product = new Product({
+      type: type.trim(),
+      brand: brand.trim(),
+      usage: usage.trim(),
+      size: req.body.size?.trim(),
+      color: req.body.color?.trim(),
+      material: req.body.material?.trim(),
+      power: req.body.power ?? null,
+      port: req.body.port?.trim() ?? null,
+      wired: req.body.wired ?? null,
+      display: req.body.display ?? null,
+      storage: req.body.storage != null ? Number(req.body.storage) : null,
+      imageUrl: (req.body.imageUrl || '').trim(),
+      cloudinaryId: (req.body.cloudinaryId || '').trim()
     });
-    res.status(201).json(ProductData);
-  }catch(error){
-    console.error("Error creating Product: ".error);
-    if (error.code === 11000) {
-      return res.status(400).json({ message: "You already have a Product with this code" });
+
+    const saved = await product.save();
+    res.status(201).json({
+      success: true,
+      message: 'Product created',
+      data: saved
+    });
+  } catch (error) {
+    console.error('createProduct error:', error);
+    if (error.name === 'ValidationError') {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid data',
+        code: 'VALIDATION_ERROR'
+      });
     }
-    res.status(500).json({message: error.message});
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+      code: 'CREATE_FAILED'
+    });
   }
-}
+};
+
 const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const updateData = req.body;
-
-    const ProductData = await Product.findByIdAndUpdate(id, updateData, {new: true});
-    if (!ProductData) {
-      return res.status(404).json({ message: "Product not found" });
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid ID',
+        code: 'INVALID_ID'
+      });
     }
-    if(ProductData.userId.toString()!=req.user.id.toString()&& req.user.role!=='admin'){
-      return res.status(403).json({message: "You can only update your own Products "})
-    }
-    const updatedProduct=await Product.findByIdAndUpdate(
-      id, updateData, {new : true, runValidators: true}
-    );
 
-    res.status(200).json(Product);
+    const allowed = ['type','brand','usage','size','color','material','power','port','wired','display','storage','imageUrl','cloudinaryId'];
+    const updates = {};
+    for (const key of allowed) {
+      if (req.body[key] !== undefined) {
+        updates[key] = req.body[key];
+        if (typeof req.body[key] === 'string') updates[key] = req.body[key].trim();
+        if (['power','wired','display'].includes(key)) updates[key] = req.body[key] ?? null;
+        if (key === 'port') updates[key] = req.body[key]?.trim() ?? null;
+        if (key === 'storage') updates[key] = req.body[key] != null ? Number(req.body[key]) : null;
+        if (['imageUrl','cloudinaryId'].includes(key)) updates[key] = (req.body[key] || '').trim();
+      }
+    }
+
+    const updated = await Product.findByIdAndUpdate(id, updates, { new: true, runValidators: true });
+    if (!updated) {
+      return res.status(404).json({
+        success: false,
+        message: 'Product not found',
+        code: 'NOT_FOUND'
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Product updated',
+      data: updated
+    });
   } catch (error) {
-    console.error("Error updating Product: ",error);
-    res.status(500).json({ message: error.message });
+    console.error('updateProduct error:', error);
+    if (error.name === 'ValidationError') {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid data',
+        code: 'VALIDATION_ERROR'
+      });
+    }
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+      code: 'UPDATE_FAILED'
+    });
   }
 };
 

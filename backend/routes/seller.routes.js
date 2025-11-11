@@ -2,7 +2,7 @@ const express=require('express');
 const router=express.Router();
 const upload=require('../services/multer.service');
 const{
-    getSeller, deleteSeller, 
+    getSeller, deleteSeller, createSeller,
     getSellers,updateSellerProfile
     
 } =require('../controllers/seller.controller');
@@ -15,6 +15,11 @@ router.get('/',
     roleMiddleware(['admin','seller','customer']),
     checkPermission('view_sellers'),
     getSellers);
+router.post('/',
+    authUser,
+    roleMiddleware(['seller','admin']),
+    checkPermission('create_seller'),
+    createSeller);
 router.get('/:id',
     authUser, 
     roleMiddleware(['seller']), 
@@ -28,7 +33,7 @@ router.put('/profile/:id',
     updateSellerProfile);
 router.delete('/:id',
     roleMiddleware(['admin']), 
-    checkPermission('delete_student'), 
+    checkPermission('delete_seller'), 
     deleteSeller);
 
 module.exports=router;

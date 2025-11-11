@@ -1,6 +1,5 @@
 import React from 'react'
-import { Footer} from '../components/index'
-import Cart from '../components/Cart'
+import { Footer, Cart} from '../components/layout/index'
 
 const CartPage = () => {
   return (
