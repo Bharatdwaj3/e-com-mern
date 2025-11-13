@@ -6,6 +6,8 @@ const productSchema = new mongoose.Schema({
   brand: { type: String, required: true, trim: true },    // e.g., "Sony", "IKEA"
   usage: { type: String, required: true, trim: true },    // e.g., "Home", "Work", "Outdoor"
 
+  price: {type: Number,required: true},
+
   // Optional attributes — depend on product type
   size: { type: String, trim: true },                     // e.g., "15-inch", "Medium"
   color: { type: String, trim: true },

@@ -24,7 +24,7 @@ const ProductDetails = () => {
         console.error(err);
         toast.error("Product not found or server error");
         setLoading(false);
-        navigate("/products", { replace: true }); // REDIRECT ON FAIL
+        navigate("/product", { replace: true }); // REDIRECT ON FAIL
       }
     };
     fetchProduct();
@@ -101,28 +101,37 @@ const ProductDetails = () => {
                 )}
               </Box>
 
-              <Button
-                variant="contained"
-                color="primary"
-                size="large"
-                fullWidth
-                className="mt-8"
-                onClick={() => {
-                  const cart = JSON.parse(localStorage.getItem("cartItems") || "[]");
-                  const existing = cart.find(item => item.id === product._id);
-                  if (existing) {
-                    existing.quantity += 1;
-                    toast.info("Quantity +1");
-                  } else {
-                    cart.push({ id: product._id, quantity: 1, addedAt: new Date() });
-                    toast.success("Added to cart!");
-                  }
-                  localStorage.setItem("cartItems", JSON.stringify(cart));
-                  // Optional: navigate("/cart")
-                }}
-              >
-                Add to Cart
-              </Button>
+              // src/pages/ProductDetails.jsx  (only the button part)
+<Button
+  variant="contained"
+  color="primary"
+  size="large"
+  fullWidth
+  className="mt-8"
+  onClick={() => {
+    const cart = JSON.parse(localStorage.getItem("cartItems") || "[]");
+    const productId = product._id;
+
+    const existing = cart.find(item => item._id === productId);
+    if (existing) {
+      existing.quantity += 1;
+      toast.info("Quantity +1");
+    } else {
+      // ←←←←  STORE PRICE + IMAGE + TYPE  ←←←←
+      cart.push({
+        _id: productId,
+        type: product.type,
+        imageUrl: product.imageUrl,
+        price: Number(product.price),   // ← THIS WAS MISSING
+        quantity: 1,
+      });
+      toast.success("Added to cart!");
+    }
+    localStorage.setItem("cartItems", JSON.stringify(cart));
+  }}
+>
+  Add to Cart
+</Button>
             </Box>
           </Box>
         </Box>

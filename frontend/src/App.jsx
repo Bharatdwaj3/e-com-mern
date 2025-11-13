@@ -1,4 +1,4 @@
-import {ProductDetails, Products} from './components/products/index';
+import {ProductDetails, ProductGrid} from './components/products/index';
 import  {Navbar}  from './components/layout/index';
 import {Home, About} from './pages/index';
 import { BrowserRouter as Router, Routes, Route  } from 'react-router-dom'
@@ -17,18 +17,14 @@ function App() {
         <Navbar/>
         <Routes>
           <Route path='/' element={<Home/> }/>  
-            <Route path='/cart' element={<Cart/>}/>
-            <Route path='/product' element={<Products/>}/>
-            <Route path='/product/:id' element={<ProductDetails/>}/>
-            <Route path="/cart" element={<Cart />} />       
-            <Route path='/about' element={<About/>} />
-
-            <Route path='/customer' element={<CustomerProfile/> }/>    
-            <Route path='/seller' element={<SellerProfile/> }/>    
-            
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-          <Route/>  
+          <Route path='/cart' element={<Cart/>}/>
+          <Route path='/product' element={<ProductGrid/>}/>
+          <Route path='/product/:id' element={<ProductDetails/>}/>    
+          <Route path='/about' element={<About/>} />
+          <Route path='/customer' element={<CustomerProfile/> }/>    
+          <Route path='/seller' element={<SellerProfile/> }/>      
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
         </Routes>
       </Router> 
     </>
