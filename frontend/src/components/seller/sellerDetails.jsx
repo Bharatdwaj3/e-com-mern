@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ProductCard = () => {
+const SellerDetails = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const ProductCard = () => {
     );
 }
 
-export default ProductCard;
+export default SellerDetails;

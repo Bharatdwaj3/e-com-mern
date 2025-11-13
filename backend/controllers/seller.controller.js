@@ -1,15 +1,8 @@
-// seller.controller.js
-// FULLY REFACTORED – matches customer.controller.js + fixes all PUT bugs
-// Collection: "seller" (lowercase singular) – enforced in model & aggregation
-
 const mongoose = require("mongoose");
 const Seller = require("../models/seller.model");
 const User = require("../models/user.model");
 const cloudinary = require("../services/cloudinary.service");
 
-// ──────────────────────────────────────────────────────────────
-//  GET ALL SELLERS (raw profiles from 'seller' collection)
-// ──────────────────────────────────────────────────────────────
 const getSellers = async (req, res) => {
   try {
     const sellers = await Seller.find({}).lean();
@@ -20,10 +13,6 @@ const getSellers = async (req, res) => {
   }
 };
 
-// ──────────────────────────────────────────────────────────────
-//  GET SINGLE SELLER (User + Seller profile aggregated)
-//  → Uses collection: "seller" (not "sellers")
-// ──────────────────────────────────────────────────────────────
 const getSeller = async (req, res) => {
   try {
     const { id } = req.params;
@@ -37,7 +26,7 @@ const getSeller = async (req, res) => {
       },
       {
         $lookup: {
-          from: "seller",           // ← CRITICAL: matches Compass
+          from: "seller",           
           localField: "_id",
           foreignField: "userId",
           as: "profile",
@@ -76,10 +65,6 @@ const getSeller = async (req, res) => {
   }
 };
 
-// ──────────────────────────────────────────────────────────────
-//  CREATE SELLER PROFILE
-//  → Called after user signs up as seller
-// ──────────────────────────────────────────────────────────────
 const createSeller = async (req, res) => {
   try {
     const sellerData = { ...req.body };
@@ -97,12 +82,6 @@ const createSeller = async (req, res) => {
   }
 };
 
-// ──────────────────────────────────────────────────────────────
-//  UPDATE OWN PROFILE (via JWT)
-//  → Partial update (preserves unsent fields)
-//  → Deletes old Cloudinary image if new one uploaded
-//  → Upsert: creates profile if missing
-// ──────────────────────────────────────────────────────────────
 const updateSellerProfile = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -113,23 +92,19 @@ const updateSellerProfile = async (req, res) => {
       return res.status(403).json({ message: "You don't have permissions to edit this!" });
     }
 
-    const profileData = { ...req.body, userId }; // enforce owner
-
+    const profileData = { ...req.body, userId }; 
     let oldSeller = null;
 
-    // ── Handle image upload + delete old ──
     if (req.file) {
       profileData.imageUrl = req.file.path;
       profileData.cloudinaryId = req.file.filename;
 
-      // Get current profile to delete old image
       oldSeller = await Seller.findOne({ userId });
       if (oldSeller?.cloudinaryId) {
         await cloudinary.uploader.destroy(oldSeller.cloudinaryId);
       }
     }
 
-    // ── Partial update using $set → NO DATA LOSS ──
     const updated = await Seller.findOneAndUpdate(
       { userId },
       { $set: profileData },
@@ -148,21 +123,14 @@ const updateSellerProfile = async (req, res) => {
   }
 };
 
-// ──────────────────────────────────────────────────────────────
-//  UPDATE ANY SELLER (by profile _id)
-//  → Admin OR owner only
-//  → Full replace (but safe: deletes old image)
-// ──────────────────────────────────────────────────────────────
 const updateSeller = async (req, res) => {
   try {
-    const { id } = req.params; // seller profile _id
+    const { id } = req.params; 
     const updateData = { ...req.body };
 
-    // ── Fetch target seller ──
     const targetSeller = await Seller.findById(id);
     if (!targetSeller) return res.status(404).json({ message: "Seller not found" });
 
-    // ── Ownership check ──
     const currentUser = await User.findById(req.user.id);
     const isOwner = targetSeller.userId.toString() === req.user.id;
     const isAdmin = currentUser?.accountType === "admin";
@@ -171,7 +139,6 @@ const updateSeller = async (req, res) => {
       return res.status(403).json({ message: "Unauthorized to update this seller" });
     }
 
-    // ── Handle image ──
     if (req.file) {
       updateData.imageUrl = req.file.path;
       updateData.cloudinaryId = req.file.filename;
@@ -193,14 +160,9 @@ const updateSeller = async (req, res) => {
   }
 };
 
-// ──────────────────────────────────────────────────────────────
-//  DELETE SELLER PROFILE
-//  → Deletes Cloudinary image
-//  → Uses correct instance variable
-// ──────────────────────────────────────────────────────────────
 const deleteSeller = async (req, res) => {
   try {
-    const { id } = req.params; // seller profile _id
+    const { id } = req.params; 
 
     const deletedSeller = await Seller.findByIdAndDelete(id);
     if (!deletedSeller) {
@@ -221,9 +183,6 @@ const deleteSeller = async (req, res) => {
   }
 };
 
-// ──────────────────────────────────────────────────────────────
-//  EXPORT
-// ──────────────────────────────────────────────────────────────
 module.exports = {
   getSellers,
   getSeller,

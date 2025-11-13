@@ -15,7 +15,11 @@ const getCustomer = async (req, res) => {
   try {
     const { id } = req.params;  
     const [aggregatedCustomer] = await User.aggregate([
-      { $match: { _id: new mongoose.Types.ObjectId(id), accountType: 'customer' } },
+      { $match: { 
+        _id: new mongoose.Types.ObjectId(id), 
+        accountType: 'customer' 
+      } 
+    },
       {
         $lookup: {
           from: 'customer',
@@ -26,19 +30,21 @@ const getCustomer = async (req, res) => {
       },
       { $unwind: { path: '$profile', preserveNullAndEmptyArrays: true } },
       {
-        $project: {
-          _id: 1,
-          fullName: 1,
-          email: 1,
-          accountType: 1,
-          age: '$profile.age',
-          gender: '$profile.gender',
-          dept: '$profile.dept',
-          major: '$profile.major',
-          course: '$profile.course',
-          imageUrl: '$profile.imageUrl'
-        }
-      }
+       $replaceRoot: {
+        newRoot: {
+          $mergeObjects: [
+            {
+              _id: "$_id",
+              fullName: "$fullName",
+              email: "$email",
+              accountType: "$accounTYpe",
+            },
+            {$ifNull: ["$profile",{}]},
+          ],
+        },
+       },
+      },
+      
     ]);
 
     if (!aggregatedCustomer) return res.status(404).json({ message: 'Customer not found' });

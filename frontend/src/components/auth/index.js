@@ -1,4 +1,6 @@
 import Login from "./Login";
-import Signin from "./Signin";
+import Signup from "./Signup";
 
-export {Login, Signin};
+
+
+export {Login, Signup};

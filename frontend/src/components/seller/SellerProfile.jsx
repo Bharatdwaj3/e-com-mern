@@ -1,6 +1,6 @@
 import React from 'react';
 
-const OwnerProfile = () => {
+const SellerProfile = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const OwnerProfile = () => {
     );
 }
 
-export default OwnerProfile;
+export default SellerProfile;

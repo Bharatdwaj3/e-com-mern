@@ -16,6 +16,11 @@ router.get('/',
     roleMiddleware(['admin','seller','customer']),
     checkPermission('view_products'),
     getProducts);
+router.get('/:id', 
+    authMiddleware,
+    roleMiddleware(['admin','seller','customer']),
+    checkPermission('view_products'),
+    getProduct);
 router.post('/',
     authMiddleware,
     roleMiddleware(['seller','admin']),
