@@ -70,7 +70,7 @@ const ProductGrid = () => {
   };
 
   return (
-    <div className="h-[2900px] bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 w-[1496px] ">
+    <div className="h-[2900px] bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 w-screen ">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}

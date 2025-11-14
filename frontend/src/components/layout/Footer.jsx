@@ -1,83 +1,55 @@
-import InstagramIcon from '@mui/icons-material/Instagram';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
 import React from 'react'
+import { Box, Container, Grid, Typography, Link, IconButton, Divider, Stack } from '@mui/material'
+import InstagramIcon from '@mui/icons-material/Instagram'
+import TwitterIcon from '@mui/icons-material/Twitter'
+import FacebookIcon from '@mui/icons-material/Facebook'
 
 const Footer = () => {
   return (
-    <>
-       <div className='p-16 w-full h-[500px] bg-gradient-to-t from-blue-100 to-slate-600 absolute bottom-0'>
-          <div className=" w-[1200px] h-24 absolute inset-x-0 top-0 ml-20  border-white"></div>
-         <div className=" w-[1200px] h-80 absolute inset-20  border-white">
-              <div className=" h-full grid grid-flow-col grid-rows-1 grid-cols-6 gap-0">
+    <Box sx={{ bgcolor: 'black', color: 'white', py: 10, borderTop: '6px solid #f97316' }}>
+      <Container maxWidth="lg">
+        <Grid container spacing={8}>
+          <Grid item xs={12} md={4}>
+            <Typography variant="h3" fontWeight="900" sx={{ background: 'linear-gradient(90deg, #fb923c, #fbbf24)', backgroundClip: 'text', WebkitBackgroundClip: 'text', color: 'transparent', mb: 2 }}>
+              Bolt
+            </Typography>
+            <Typography variant="body1" color="grey.400" paragraph>
+              Everyday essentials on fire. Clothing • Electronics • Daily Gear
+            </Typography>
+            <Stack direction="row" spacing={2} sx={{ my: 3 }}>
+              <IconButton sx={{ color: '#fb923c', '&:hover': { color: '#fbbf24' } }}><InstagramIcon /></IconButton>
+              <IconButton sx={{ color: '#fb923c', '&:hover': { color: '#fbbf24' } }}><TwitterIcon /></IconButton>
+              <IconButton sx={{ color: '#fb923c', '&:hover': { color: '#fbbf24' } }}><FacebookIcon /></IconButton>
+            </Stack>
+            <Typography variant="body2" color="grey.500">
+              +91 98753-04467 • hello@bolt.store
+            </Typography>
+          </Grid>
 
-        <div className="  col-span-2">
-          <div className=" h-48 relative">
-          <div className=" w-full h-12">
-              <h1 className="text-white font-extrabold text-left text-xl font-sans">Notes!!</h1>
-            </div>
-            <div className=" h-36 w-full absolute bottom-0 left-0">
-              <ul className="space-y-2 text-xs text-white font-thin font-serif">
-                <div className="flex justify-start">
-                  <InstagramIcon fontSize="large"/>
-                  <TwitterIcon fontSize="large"/>
-                  <FacebookIcon fontSize="large"/>
-                </div>
-                <li className="text-xl">Phone : 91+ 98753-04467</li>
-                <li className="text-xl">Email : FocusFlow@foo.com</li>
-              </ul>
-            </div>
-            </div>
-          </div>
+          {[
+            { title: "Shop", links: ["Clothing", "Electronics", "Daily Essentials", "New Arrivals", "Sale"] },
+            { title: "Company", links: ["About", "Careers", "Press", "Blog", "Contact"] },
+            { title: "Support", links: ["Help", "Shipping", "Returns", "Size Guide", "Track Order"] }
+          ].map(col => (
+            <Grid item xs={6} md={2} key={col.title}>
+              <Typography variant="h6" color="#fb923c" fontWeight="bold" gutterBottom>{col.title}</Typography>
+              <Stack spacing={1.5}>
+                {col.links.map(link => (
+                  <Link key={link} href="#" color="grey.400" underline="hover" sx={{ '&:hover': { color: '#fbbf24' } }}>
+                    {link}
+                  </Link>
+                ))}
+              </Stack>
+            </Grid>
+          ))}
+        </Grid>
 
-        <div className=" h-48 relative">
-          <div className=" w-full h-12">
-            <h1 className="text-white font-extrabold text-left text-xl font-sans">About</h1>
-          </div>
-          <div className=" h-36 w-full absolute bottom-0 left-0">
-            <ul className="space-y-2 text-xs text-white font-thin font-serif mt-12">
-              <li>Serices</li>
-              <li>Packages</li>
-              <li>Docs</li>
-            </ul>
-          </div>
-        </div>
-
-        <div className=" h-48 relative">
-          <div className=" w-full h-12">
-            <h1 className="text-white font-extrabold text-left text-xl font-sans">Goals</h1>
-          </div>
-          <div className=" h-36 w-full absolute bottom-0 left-0">
-            <ul className="space-y-2 text-xs text-white font-thin font-serif mt-12">
-              <li>Legal</li>
-              <li>Community</li>
-              <li>Team</li>
-            </ul>
-          </div>
-        </div>
-
-      <div className=" h-48 relative">
-          <div className=" w-full h-12">
-            <h1 className="text-white font-extrabold text-left text-xl font-sans">Users</h1>
-          </div>
-          <div className=" h-36 w-full absolute bottom-0 left-0">
-            <ul className="space-y-2 text-xs text-white font-thin font-serif mt-12">
-              <li>Devlopers</li>
-              <li>Freelanceers</li>
-              <li>Emtusiasts</li>
-              <li>HeathFolk</li>
-            </ul>
-          </div>
-        </div>
-
-        
-
-</div>
-         </div>
-         <div className=" w-[1200px] h-24 absolute inset-x-0 bottom-0 ml-20 border-t border-white"></div>
-
-    </div>
-    </>
+        <Divider sx={{ bgcolor: '#f97316', my: 6, height: 2 }} />
+        <Typography variant="body2" color="grey.600" align="center">
+          © 2025 Bolt Store. Made with 🔥 in India.
+        </Typography>
+      </Container>
+    </Box>
   )
 }
 

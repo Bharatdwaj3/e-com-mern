@@ -2,29 +2,64 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { NumericFormat } from "react-number-format";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import {
-  Container, Box, Typography, Button, Card, CardContent,
-  Grid, Avatar, IconButton, TextField, Divider, Badge
+  Container,
+  Box,
+  Typography,
+  Button,
+  Card,
+  CardContent,
+  Grid,
+  Avatar,
+  IconButton,
+  TextField,
+  Divider,
+  Badge,
+  CircularProgress,
 } from "@mui/material";
 
 import {
-  ShoppingCart, Add, Remove, Delete, ArrowBack, CreditCard
+  ShoppingCart,
+  Add,
+  Remove,
+  Delete,
+  ArrowBack,
+  CreditCard,
 } from "@mui/icons-material";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
+  const [user, setUser] = useState(null);
+  const [loadingUser, setLoadingUser] = useState(true);
+  const navigate = useNavigate();
 
-  // === CART LOGIC (ALL INSIDE) ===
+  // === FETCH USER FROM BACKEND (WORKS WITH httpOnly COOKIES) ===
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await axios.get("/api/user/profile", { withCredentials: true });
+        setUser(res.data.user || res.data);
+      } catch (err) {
+        console.log("User not logged in or token expired",err);
+        setUser(null);
+      } finally {
+        setLoadingUser(false);
+      }
+    };
+    fetchUser();
+  }, []);
 
+  // === CART LOGIC ===
   const loadCart = () => {
     try {
       const stored = JSON.parse(localStorage.getItem("cartItems") || "[]");
-      return stored.map(item => ({
+      return stored.map((item) => ({
         ...item,
         quantity: Number(item.quantity) || 1,
-        price: Number(item.price) || 0,   // ← fallback if missing
+        price: Number(item.price) || 0,
       }));
     } catch (e) {
       console.error("Cart load error", e);
@@ -38,7 +73,7 @@ const Cart = () => {
 
   const updateQuantity = (_id, newQty) => {
     if (newQty < 1) return;
-    const updated = cartItems.map(item =>
+    const updated = cartItems.map((item) =>
       item._id === _id ? { ...item, quantity: newQty } : item
     );
     setCartItems(updated);
@@ -46,7 +81,7 @@ const Cart = () => {
   };
 
   const removeItem = (_id) => {
-    const filtered = cartItems.filter(item => item._id !== _id);
+    const filtered = cartItems.filter((item) => item._id !== _id);
     setCartItems(filtered);
     saveCart(filtered);
     toast.error("Item removed");
@@ -56,154 +91,147 @@ const Cart = () => {
     setCartItems(loadCart());
   }, []);
 
-  // === CALCULATIONS (NOW CORRECT) ===
   const subtotal = cartItems.reduce((sum, item) => {
-    const price = Number(item.price) || 0;
-    const qty = Number(item.quantity) || 0;
-    return sum + (price * qty);
+    return sum + (Number(item.price) || 0) * (Number(item.quantity) || 0);
   }, 0);
 
   const totalItems = cartItems.reduce((sum, item) => sum + (item.quantity || 0), 0);
 
-  // === EMPTY STATE ===
-  if (cartItems.length === 0) {
-    return (
-      <Box className="w-screen bg-gradient-to-br from-slate-50 to-gray-100 min-h-screen pt-24">
-        <Container maxWidth="lg">
-          <Box className="text-center py-16">
-            <ShoppingCart className="w-24 h-24 text-gray-300 mx-auto mb-4" />
-            <Typography variant="h5" className="text-gray-600 mb-4">
-              Your cart is empty
-            </Typography>
-            <Button variant="contained" color="primary" component={Link} to="/product">
-              Continue Shopping
-            </Button>
-          </Box>
-        </Container>
-      </Box>
-    );
-  }
+  // === CUSTOMER INFO FROM BACKEND USER ===
+  const customerInfo = user
+    ? {
+        name: user.name || user.username || "Customer",
+        email: user.email || "",
+        phone: user.phone || user.mobile || "",
+      }
+    : null;
 
-  // === FULL CART UI ===
+  // === EMPTY CART ===
   return (
-    <Box className="w-screen bg-gradient-to-br from-slate-50 to-gray-100 min-h-screen pt-24">
-      <Container maxWidth="lg">
-        <Typography variant="h4" className="font-bold text-slate-800 mb-6">
-          Shopping Cart
-          <Badge badgeContent={totalItems} color="primary" className="ml-2" />
-        </Typography>
+  <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100 pt-24 pb-12">
+    {/* CENTERED CONTAINER */}
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <Grid container spacing={4}>
-          {/* Items */}
-          <Grid item xs={12} md={8}>
-            {cartItems.map(item => (
-              <Card key={item._id} className="mb-4">
-                <CardContent>
-                  <Grid container spacing={2} alignItems="center">
-                    <Grid item xs={3} sm={2}>
-                      <Avatar
-                        variant="rounded"
-                        src={item.imageUrl?.trim() || "/image/product_not_available.jpg"}
-                        alt={item.type}
-                        className="w-full h-20 object-cover"
-                      />
-                    </Grid>
+      {/* TITLE */}
+      <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">
+        Shopping Cart <span className="text-blue-600">({totalItems})</span>
+      </h1>
 
-                    <Grid item xs={9} sm={10}>
-                      <Typography variant="h6">{item.type || "Unknown"}</Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        <NumericFormat
-                          value={item.price}
-                          displayType="text"
-                          thousandSeparator
-                          prefix="$"
-                        /> each
-                      </Typography>
+      {/* CONDITIONAL RENDERING — STILL WORKS */}
+      {cartItems.length === 0 ? (
+        <div className="text-center py-16 bg-white rounded-xl shadow-md">
+          <p className="text-xl text-gray-600 mb-6">Your cart is empty</p>
+          <Button
+            variant="contained"
+            component={Link}
+            to="/product"
+            startIcon={<ArrowBack />}
+            className="bg-blue-600 hover:bg-blue-700"
+          >
+            Continue Shopping
+          </Button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          
+          {/* LEFT: CART ITEMS */}
+          <div className="lg:col-span-2 space-y-6">
+            {cartItems.map((item) => (
+              <div
+                key={item._id}
+                className="bg-white rounded-xl shadow-md p-6 flex items-center gap-4 hover:shadow-lg transition-shadow"
+              >
+                <div className="bg-gray-200 border-2 border-dashed rounded-xl w-20 h-20 flex-shrink-0" />
+                
+                <div className="flex-grow">
+                  <h3 className="font-semibold text-lg text-gray-800">{item.name}</h3>
+                  <p className="text-sm text-gray-600">
+                    <NumericFormat value={item.price} displayType="text" thousandSeparator prefix="₹" /> each
+                  </p>
+                </div>
 
-                      <Box className="flex items-center gap-2 mt-2">
-                        <IconButton size="small" onClick={() => updateQuantity(item._id, item.quantity - 1)}>
-                          <Remove />
-                        </IconButton>
+                <div className="flex items-center gap-2">
+                  <IconButton
+                    size="small"
+                    onClick={() => updateQuantity(item._id, item.quantity - 1)}
+                    disabled={item.quantity <= 1}
+                  >
+                    <Remove />
+                  </IconButton>
+                  <TextField value={item.quantity} size="small" className="w-16" inputProps={{ readOnly: true }} />
+                  <IconButton size="small" onClick={() => updateQuantity(item._id, item.quantity + 1)}>
+                    <Add />
+                  </IconButton>
+                </div>
 
-                        <TextField
-                          value={item.quantity}
-                          onChange={e => updateQuantity(item._id, parseInt(e.target.value) || 1)}
-                          size="small"
-                          className="w-16"
-                          inputProps={{ min: 1, style: { textAlign: "center" } }}
-                        />
-
-                        <IconButton size="small" onClick={() => updateQuantity(item._id, item.quantity + 1)}>
-                          <Add />
-                        </IconButton>
-
-                        <IconButton size="small" color="error" onClick={() => removeItem(item._id)}>
-                          <Delete />
-                        </IconButton>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                </CardContent>
-              </Card>
+                <IconButton onClick={() => removeItem(item._id)} className="text-red-500 hover:text-red-700">
+                  <Delete />
+                </IconButton>
+              </div>
             ))}
-          </Grid>
+          </div>
 
-          {/* Summary */}
-          <Grid item xs={12} md={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6" className="mb-4">Order Summary</Typography>
-                <Divider className="mb-4" />
+          {/* RIGHT: ORDER SUMMARY */}
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-xl shadow-md p-6 sticky top-24">
+              <Typography variant="h6" className="mb-4 font-bold">Order Summary</Typography>
+              <Divider className="mb-4" />
 
-                <Box className="space-y-2">
-                  <Box className="flex justify-between">
-                    <Typography>Subtotal</Typography>
-                    <Typography>
-                      <NumericFormat value={subtotal} displayType="text" thousandSeparator prefix="$" />
-                    </Typography>
-                  </Box>
-                  <Box className="flex justify-between">
-                    <Typography>Shipping</Typography>
-                    <Typography>Free</Typography>
-                  </Box>
-                  <Divider className="my-2" />
-                  <Box className="flex justify-between font-bold">
-                    <Typography variant="h6">Total</Typography>
-                    <Typography variant="h6">
-                      <NumericFormat value={subtotal} displayType="text" thousandSeparator prefix="$" />
-                    </Typography>
-                  </Box>
-                </Box>
+              <div className="space-y-3">
+                <div className="flex justify-between text-gray-700">
+                  <span>Subtotal</span>
+                  <span><NumericFormat value={subtotal} displayType="text" thousandSeparator prefix="₹" /></span>
+                </div>
+                <div className="flex justify-between text-gray-700">
+                  <span>Shipping</span>
+                  <span className="text-green-600 font-medium">Free</span>
+                </div>
+                <Divider className="my-3" />
+                <div className="flex justify-between text-lg font-bold">
+                  <span>Total</span>
+                  <span className="text-blue-600">
+                    <NumericFormat value={subtotal} displayType="text" thousandSeparator prefix="₹" />
+                  </span>
+                </div>
+              </div>
 
-                <Button
-                  variant="contained"
-                  color="primary"
-                  fullWidth
-                  size="large"
-                  className="mt-6"
-                  startIcon={<CreditCard />}
-                  onClick={() => toast.success("Proceeding to checkout!")}
-                >
-                  Proceed to Checkout
-                </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                fullWidth
+                size="large"
+                className="mt-6 bg-blue-600 hover:bg-blue-700"
+                startIcon={<CreditCard />}
+                disabled={loadingUser || !user}
+                onClick={() => {
+                  if (!user) {
+                    toast.error("Please login to checkout");
+                    navigate("/login");
+                    return;
+                  }
+                  navigate("/checkout", { state: { cartItems, subtotal, customerInfo } });
+                }}
+              >
+                {loadingUser ? "Loading..." : !user ? "Login Required" : "Proceed to Checkout"}
+              </Button>
 
-                <Button
-                  variant="outlined"
-                  fullWidth
-                  className="mt-2"
-                  startIcon={<ArrowBack />}
-                  component={Link}
-                  to="/product"
-                >
-                  Continue Shopping
-                </Button>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
-      </Container>
-    </Box>
-  );
+              <Button
+                variant="outlined"
+                fullWidth
+                className="mt-3 border-blue-600 text-blue-600 hover:bg-blue-50"
+                startIcon={<ArrowBack />}
+                component={Link}
+                to="/product"
+              >
+                Continue Shopping
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  </div>
+);
 };
 
 export default Cart;

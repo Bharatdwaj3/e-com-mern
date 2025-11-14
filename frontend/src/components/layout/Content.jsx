@@ -1,100 +1,87 @@
+// Content.jsx – WRAPPER OFFICIALLY DEAD. FOOTER IS FREE.
 import React from 'react'
 
 const Content = () => {
   return (
     <>
-       <div className='p-16 h-[2000px] w-screen absolute top-115 '>
-          
-            <div className='mt-32 p-8 h-[900px] w-[1360px] rounded-xl bg-amber-200 flex flex-row'>
-              <div className='h-[800px] w-2/3  flex flex-col'>
-                <div className='h-1/3 w-[1300px]  border-b-4 border-stone-500'>
-                  <p className='italic text-gray-950 text-xl p-3 mr-[500px] ml-12 mt-12'>
-                      It doesn’t need to be perfect or traditional — it just needs to work for you.
-                      Maybe it’s bullet points, doodles, colors, or quick thought dumps — that’s all valid.
-                      Your notes are reflections of how you think, feel, and process the world around you.
-                      They don’t have to look like anyone else’s to be effective.
-                      What matters is that you understand them and that they help you move forward.
-                      You’re not just writing things down — you’re building a mental map for success.
-                      That’s a skill worth celebrating every time you sit down to create.
-                  </p>
+      {/* OLD WRAPPER = GONE. BURNED. NEVER COMING BACK. */}
+      {/* NO absolute, NO fixed height, NO top-115, NO z-index war */}
+
+      <div className="min-h-screen bg-black/95 text-white pt-32 pb-96"> {/* pb-96 = space for footer */}
+
+        {/* SECTION 1 – CATEGORIES */}
+        <section className="max-w-7xl mx-auto text-center px-6">
+          <h1 className="text-7xl md:text-9xl font-black leading-tight">
+            Everyday<br/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-400">
+              essentials.
+            </span><br/>
+            <span className="text-white">On fire.</span>
+          </h1>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-20 mt-32">
+            {[
+              { name: "Clothing", img: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800" },
+              { name: "Electronics", img: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800" },
+              { name: "Daily Essential", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800" }
+            ].map((cat) => (
+              <div key={cat.name} className="group cursor-pointer">
+                <div className="relative overflow-hidden rounded-3xl mb-8 shadow-2xl">
+                  <img src={cat.img} alt={cat.name} className="w-full h-96 object-cover group-hover:scale-110 transition duration-500"/>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                  <h3 className="absolute bottom-10 left-1/2 -translate-x-1/2 text-6xl font-black text-orange-400 drop-shadow-2xl">
+                    {cat.name}
+                  </h3>
                 </div>
-                <div className='h-1/3 w-[1300px] border-b-4 border-stone-500'>
-                  <p className='italic text-gray-950 text-xl p-3 mr-[500px] ml-12 mt-12'>Finding your focus in a noisy world can feel tough, but it’s not impossible.
-Sometimes, all it takes is the right environment or the right system.
-A solid productivity app can help bring structure without restricting your flow.
-Especially one with plugin support — so you can tailor it to your own brain.
-Local storage means privacy and control, giving you a safe space to work.
-Something that reminds you it’s okay to go at your own pace and reset.
-Productivity isn’t about speed — it’s about meaningful progress.</p>
-                </div>
-                <div className='h-1/3 w-[1300px] border-b-4 border-stone-500'>
-                  <p className='italic text-gray-950  text-xl p-3 mr-[500px] ml-12 mt-11'>
-                    You’re not just organizing tasks or notes — you’re building a life system.
-One that grows with your interests, adapts to your energy, and supports your focus.
-Your workflow doesn’t need to be complicated, just aligned with how you function best.
-It’s okay to try, adjust, and rebuild — that’s part of the process.
-Each plugin, layout, or tweak you make is an act of self-discovery.
-You’re capable, resourceful, and doing better than you think.
-                  </p>
+                <a href="#" className="inline-block px-12 py-6 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-full font-bold text-xl hover:scale-110 transition shadow-2xl">
+                  Shop Now
+                </a>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* SECTION 2 – WHY MILLIONS */}
+        <section className="max-w-7xl mx-auto mt-64 text-center px-6">
+          <h2 className="text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-400 mb-24">
+            Why Millions Shop Here
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-20">
+            {["2M+", "190+", "30-day", "24/7"].map((stat, i) => (
+              <div key={stat}>
+                <div className="text-9xl font-black text-orange-400">{stat}</div>
+                <p className="text-2xl text-gray-400 mt-4">
+                  {["Orders shipped", "Countries", "Free returns", "Support"][i]}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* SECTION 3 – NEW DROPS */}
+        <section className="max-w-7xl mx-auto mt-64 text-center px-6">
+          <h2 className="text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-400 mb-24">
+            New Drops This Week
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+            {[
+              { img: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=800", title: "Summer Heat" },
+              { img: "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=800", title: "Tech Drop" },
+              { img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800", title: "Carry Pro" }
+            ].map((drop) => (
+              <div key={drop.title} className="group relative rounded-3xl overflow-hidden shadow-2xl cursor-pointer">
+                <img src={drop.img} alt={drop.title} className="w-full h-96 object-cover group-hover:scale-110 transition duration-700"/>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
+                <div className="absolute bottom-10 left-10 text-left">
+                  <h3 className="text-6xl font-black text-white drop-shadow-2xl">{drop.title}</h3>
+                  <p className="text-3xl font-bold text-yellow-400 mt-3">Shop Now →</p>
                 </div>
               </div>
-              <div className='h-[800px] w-1/3  '>
-                <div className='relative h-3/3 w-[435px]  bg-amber-200'>
-                  <img className='absolute top-60 z-50' src="src\assets\Bol.png" alt="" />
-                </div>
-              </div>
-            </div>
-             
-            <div className='ml-12 mt-24 grid grid-cols-2 grid-rows-2 gap-6 p-8 h-[800px] w-[1360px] '>
+            ))}
+          </div>
+        </section>
 
-              
-                <div className='p-8 bg-amber-200 rounded-2xl'>
-                    <h3 className="font-bold text-gray-950 text-3xl">Developers & Freelancers</h3>
-                    <p className="font-stretch-50% italic text-gray-950 text-l mt-24">Software Developers – managing code snippets, project tasks, and version control
-
-Web Designers – organizing assets, wireframes, and feedback notes
-
-Freelance Creatives – tracking multiple clients, invoices, and deadlines
-
-Product Managers – roadmaps, team tasks, and meeting notes
-
-Virtual Assistants – handling daily schedules, reminders, and client communication</p>
-                </div>
-                <div className='p-8 bg-amber-200 rounded-2xl'>
-                    <h3 className="font-bold text-gray-950 text-3xl">Writers & Journalists</h3>
-                    <p className="font-stretch-50% italic text-gray-950 text-l mt-24">
-                      <ul>
-                        <li>Bloggers – editorial calendars, topic brainstorming, publishing checklists</li>
-                        <li>Journalists – managing interviews, deadlines, and article drafts</li>
-                        <li>Content Marketers – scheduling posts, campaign planning, and team feedback</li>
-                      </ul>
-                    </p>
-                </div>
-                <div className='p-8 bg-amber-200 rounded-2xl'>
-                    <h3 className="font-bold text-gray-950 text-3xl">Enthusiasts & Students</h3>
-                    <p className="font-stretch-50% italic text-gray-950 text-l mt-24">
-                      <ul>
-                        <li>Students – lecture notes, assignment tracking, exam revision schedules</li>
-                        <li>Self-learners – course progress, concept mapping, focused study timers</li>
-                        <li>Tech Hobbyists – documenting code, saving tools, tracking projects</li>
-                        <li>Gamers & Creators – organizing builds, video scripts, game dev logs</li>
-                      </ul>
-                    </p>
-                </div>
-                <div className='p-8 bg-amber-200 rounded-2xl'>
-                    <h3 className="font-bold text-gray-950 text-3xl">Wellness Folk</h3>
-                    <p className="font-stretch-50% italic text-gray-950 text-l mt-24">
-                      <ul>
-                        <li>Therapists – session notes, techniques, self-care trackers</li>
-                        <li>Life Coaches – client goals, progress logs, journaling tools</li>
-                        <li>Fitness Coaches – workout plans, meal logs, progress tracking</li>
-                        <li>Mindfulness Practitioners – reflection journals, breathing exercises, mood logs</li>
-                      </ul>
-                    </p>
-                </div>
-            </div>
-            
-        </div>
+      </div>
     </>
   )
 }

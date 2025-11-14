@@ -13,6 +13,10 @@ const productRoutes =require("./routes/product.routes");
 const sellerRoutes =require("./routes/seller.routes");
 const customerRoutes =require("./routes/customer.routes");
 const userRoutes =require("./routes/user.routes");
+
+const savePaymentToProduct = require('./middleware/save_paymenttoProducts');
+
+
 const paymentRoutes = require("./routes/payment.routes");
 
 const { PORT, SESSION_SECRECT, MONGO_URI } = require('./config/env.config');
@@ -21,9 +25,22 @@ const morganConfig = require('./config/morgan.config');
 require('./strategy/google.aouth');
 require('./strategy/discord.aouth');
 
+
+const runAddPayments = require('./utils/add-payment');
 const app=express();
 
-connectDB();
+// ←←← FIXED: Run DB + Migration BEFORE app starts
+(async () => {
+  try {
+    await connectDB();                    // ← Connect first
+    await runAddPayments();               // ← Then migrate
+    console.log('DB connected + migration done');
+  } catch (err) {
+    console.error('Startup failed:', err);
+    process.exit(1);
+  }
+})();
+
 app.use(morganConfig);
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -52,8 +69,7 @@ app.use('/api/product',productRoutes);
 app.use('/api/user/customer',customerRoutes);
 app.use('/api/user/seller',sellerRoutes);
 app.use('/api/user',userRoutes);
-app.use('/api/payments', paymentRoutes);
-
+app.use('/api/payments', paymentRoutes, savePaymentToProduct);  
 app.use(dbMiddleware);
 
 app.listen(PORT, () => console.log('Server Started at port : ',PORT));

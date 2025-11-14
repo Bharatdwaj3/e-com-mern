@@ -1,16 +1,31 @@
-const express=require('express');
+const express = require('express');
 const {
-    createOrder,
-    verifyPayment,
-    handlePaymentFailure,
-    getOrderStatus,
-}=require('../controllers/payment.controller');
+  createOrder,
+  verifyPayment,
+  handlePaymentFailure,
+} = require('../controllers/payment.controller');
+
+const authMiddleware = require('../middleware/auth.middleware');
+const roleMiddleware = require('../middleware/role.middleware');
 
 const router = express.Router();
 
-router.post('/create-order',createOrder);
-router.post('/verify',verifyPayment);
-router.post('/failure',handlePaymentFailure);
-router.get('/order/:orderId', getOrderStatus);
+router.post('/create-order', 
+  authMiddleware,
+  roleMiddleware(['customer']), 
+  createOrder
+);
 
-module.exports=router;
+router.post('/verify', 
+  authMiddleware,
+  roleMiddleware(['customer']), 
+  verifyPayment
+);
+
+router.post('/failure', 
+  authMiddleware,
+  roleMiddleware(['customer']), 
+  handlePaymentFailure
+);
+
+module.exports = router;

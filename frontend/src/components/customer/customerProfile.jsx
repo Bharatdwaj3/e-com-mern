@@ -54,28 +54,7 @@ const CustomerProfile = () => {
 
   const OverviewPanel = () => (
     <div className="space-y-12">
-      {/* PERSONAL INFO */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-gray-50 rounded-xl p-6 text-center">
-          <Cake className="w-10 h-10 text-blue-500 mx-auto mb-3" />
-          <div className="text-2xl font-bold text-gray-900">{customer.age ?? "—"}</div>
-          <div className="text-xs text-gray-500 uppercase tracking-wider mt-1">Age</div>
-        </div>
-        <div className="bg-gray-50 rounded-xl p-6 text-center">
-          <Transgender className="w-10 h-10 text-green-500 mx-auto mb-3" />
-          <div className="text-2xl font-bold text-gray-900">{customer.gender ?? "—"}</div>
-          <div className="text-xs text-gray-500 uppercase tracking-wider mt-1">Gender</div>
-        </div>
-        <div className="bg-gray-50 rounded-xl p-6 text-center">
-          <FamilyRestroom className="w-10 h-10 text-amber-600 mx-auto mb-3" />
-          <div className="text-2xl font-bold text-gray-900">
-            {customer.familyMembers > 0 ? customer.familyMembers : "No"}
-          </div>
-          <div className="text-xs text-gray-500 uppercase tracking-wider mt-1">Family</div>
-        </div>
-      </div>
-
-      {/* PURCHASE STATS */}
+     
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <a href={`tel:${customer.phone}`} className="bg-blue-50 rounded-xl p-6 flex items-center gap-4 hover:bg-blue-100 transition">
           <Phone className="w-10 h-10 text-blue-600" />
@@ -84,22 +63,7 @@ const CustomerProfile = () => {
             <div className="text-sm text-blue-600">Phone</div>
           </div>
         </a>
-        <div className="bg-green-50 rounded-xl p-6 flex items-center gap-4">
-          <ShoppingCart className="w-10 h-10 text-green-600" />
-          <div>
-            <div className="text-xl font-bold text-gray-900">{customer.totalOrders ?? 0}</div>
-            <div className="text-sm text-green-600">Total Orders</div>
-          </div>
-        </div>
-        <div className="bg-amber-50 rounded-xl p-6 flex items-center gap-4">
-          <AttachMoney className="w-10 h-10 text-amber-600" />
-          <div>
-            <div className="text-xl font-bold text-gray-900">
-              ${customer.totalSpent?.toFixed(2) ?? "0.00"}
-            </div>
-            <div className="text-sm text-amber-600">Total Spent</div>
-          </div>
-        </div>
+        
       </div>
 
       {/* ADDRESSES */}

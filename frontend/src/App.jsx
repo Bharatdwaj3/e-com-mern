@@ -8,6 +8,7 @@ import {Cart} from './components/layout/index';
 
 import CustomerProfile from './components/customer/customerProfile';
 import SellerProfile from './components/seller/SellerProfile';
+import Checkout from './components/payment/checkout';
 
 function App() {
   
@@ -18,6 +19,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home/> }/>  
           <Route path='/cart' element={<Cart/>}/>
+          <Route path='/checkout' element={<Checkout/>}/>
           <Route path='/product' element={<ProductGrid/>}/>
           <Route path='/product/:id' element={<ProductDetails/>}/>    
           <Route path='/about' element={<About/>} />

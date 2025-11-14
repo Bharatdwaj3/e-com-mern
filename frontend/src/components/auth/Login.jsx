@@ -41,8 +41,8 @@ export default function Login() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Login failed');
 
-      const map = { admin: '/admin', seller: '/seller', customer: '/customer' };
-      navigate(map[data.user.accountType] || '/', { replace: true });
+      
+      window.location.href = '/';
 
     } catch (err) {
       setError(err.message);
