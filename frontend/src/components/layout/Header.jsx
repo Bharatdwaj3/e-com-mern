@@ -7,7 +7,7 @@ const Header = () => {
       
       <div className="relative h-full flex items-center justify-center px-8">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-          {/* Left */}
+        
           <div className="text-center md:text-left space-y-10">
             <h1 className="text-7xl md:text-9xl font-black leading-tight">
               Everyday<br/>
@@ -29,7 +29,6 @@ const Header = () => {
             </div>
           </div>
 
-          {/* Right – Hero Image */}
           <div className="flex justify-center">
             <div className="relative">
               <img src="/src/assets/Bol.png" alt="Bolt" className="max-w-full max-h-full object-contain drop-shadow-2xl" />
@@ -41,7 +40,7 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Scroll hint */}
+
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
         <div className="w-6 h-10 border-2 border-orange-500 rounded-full flex justify-center">
           <div className="w-1 h-3 bg-orange-500 rounded-full mt-2" />

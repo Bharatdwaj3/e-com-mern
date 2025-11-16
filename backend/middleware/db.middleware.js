@@ -1,19 +1,14 @@
-// backend/middleware/dbMiddleware.js
-// MONGO ERROR HANDLER + CRASH-PROOF (headersSent guard)
 
 const errorMiddleware = (err, req, res, next) => {
   console.error('MONGO ERROR:', err);
-
-  // === FIX: THIS LINE WAS MISSING – STOPS ERR_HTTP_HEADERS_SENT ===
   if (res.headersSent) {
-    return next(err); // Bail out – response already sent upstream
+    return next(err); 
   }
 
   let status = 500;
   let message = 'Server Error';
   const errors = {};
 
-  // YOUR MONGO CASES (unchanged)
   if (err.name === 'ValidationError') {
     status = 400;
     message = 'Validation Failed';
@@ -33,7 +28,7 @@ const errorMiddleware = (err, req, res, next) => {
     message = 'Database connection failed';
   }
 
-  // === ONLY SEND ONCE ===
+
   res.status(status).json({
     success: false,
     message,
@@ -42,4 +37,4 @@ const errorMiddleware = (err, req, res, next) => {
   });
 };
 
-module.exports = errorMiddleware; // ← Must be single "module"
+module.exports = errorMiddleware; 

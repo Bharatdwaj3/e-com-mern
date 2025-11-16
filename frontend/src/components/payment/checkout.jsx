@@ -32,7 +32,7 @@ const Checkout = () => {
     }
 
     try {
-      // 1. Create order
+    
       const { data } = await axios.post('/api/payments/create-order', {
         amount: subtotal,
         cartItems,
@@ -48,7 +48,7 @@ const Checkout = () => {
         order_id: data.orderId,
         handler: async (response) => {
           try {
-            // 2. Verify payment
+          
             await axios.post('/api/payments/verify', {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
@@ -59,7 +59,7 @@ const Checkout = () => {
             });
 
             toast.success('Payment Successful! 🎉');
-            localStorage.removeItem('cartItems'); // ← CLEAR CART
+            localStorage.removeItem('cartItems'); 
             navigate('/order-success');
           } catch (err) {
             toast.error('Payment verification failed',err`.message);`);

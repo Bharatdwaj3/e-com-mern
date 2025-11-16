@@ -1,4 +1,3 @@
-// src/pages/CustomerProfile.jsx
 import React, { useEffect, useState, Suspense, lazy } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +10,6 @@ import {
   Container, Typography, Divider, Skeleton
 } from "@mui/material";
 
-// Lazy-load Cart to avoid loading it on Overview tab
 const Cart = lazy(() => import("../layout/Cart"));
 
 const CustomerProfile = () => {
@@ -19,7 +17,7 @@ const CustomerProfile = () => {
   const [customer, setCustomer] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [tab, setTab] = useState(0); // 0=Overview, 1=Cart
+  const [tab, setTab] = useState(0);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -66,7 +64,7 @@ const CustomerProfile = () => {
         
       </div>
 
-      {/* ADDRESSES */}
+  
       <div className="space-y-6">
         <div>
           <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-800 mb-2">
@@ -88,10 +86,10 @@ const CustomerProfile = () => {
 
   return (
     <>
-      {/* FULL-WIDTH WHITE CARD */}
+   
       <div className="w-screen bg-white min-h-screen">
 
-        {/* HEADER */}
+        
         <div className="border-b border-gray-200 px-6 py-8 md:px-12">
           <div className="max-w-7xl mx-auto flex items-center gap-6">
             <Avatar
@@ -114,7 +112,7 @@ const CustomerProfile = () => {
           </div>
         </div>
 
-        {/* TABS */}
+     
         <Box className="border-b border-gray-200">
           <Tabs
             value={tab}
@@ -135,7 +133,7 @@ const CustomerProfile = () => {
           </Tabs>
         </Box>
 
-        {/* CONTENT */}
+      
         <Box className="p-6 md:p-12 max-w-7xl mx-auto">
           {tab === 0 && <OverviewPanel />}
 
@@ -145,7 +143,7 @@ const CustomerProfile = () => {
                 <CircularProgress />
               </Box>
             }>
-              {/* YOUR FULL CART.JSX EMBEDDED HERE */}
+           
               <Box className="w-full">
                 <Cart />
               </Box>

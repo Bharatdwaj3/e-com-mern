@@ -17,6 +17,10 @@ const getSeller = async (req, res) => {
   try {
     const { id } = req.params;
 
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid seller ID format" });
+    }
+
     const [aggregatedSeller] = await User.aggregate([
       {
         $match: {
@@ -26,36 +30,32 @@ const getSeller = async (req, res) => {
       },
       {
         $lookup: {
-          from: "seller",           
+          from: "seller",
           localField: "_id",
           foreignField: "userId",
           as: "profile",
         },
       },
-      { $unwind: { path: "$profile", preserveNullAndEmptyArrays: true } },
+      { $unwind: { path: "$profile", preserveNullAndEmptyArrays: false } }, 
       {
-        $project: {
-          _id: 1,
-          fullName: 1,
-          email: 1,
-          accountType: 1,
-          storeName: "$profile.storeName",
-          businessType: "$profile.businessType",
-          address: "$profile.address",
-          phone: "$profile.phone",
-          taxId: "$profile.taxId",
-          rating: "$profile.rating",
-          verified: "$profile.verified",
-          imageUrl: "$profile.imageUrl",
-          cloudinaryId: "$profile.cloudinaryId",
-          createdAt: "$profile.createdAt",
-          updatedAt: "$profile.updatedAt",
+       $replaceRoot: {
+        newRoot: {
+          $mergeObjects: [
+            {
+              _id: "$_id",
+              fullName: "$fullName",
+              email: "$email",
+              accountType: "$accounTYpe",
+            },
+            {$ifNull: ["$profile",{}]},
+          ],
         },
+       },
       },
     ]);
 
     if (!aggregatedSeller) {
-      return res.status(404).json({ message: "Seller not found" });
+      return res.status(404).json({ message: "Seller profile not found" });
     }
 
     res.status(200).json(aggregatedSeller);
@@ -67,14 +67,14 @@ const getSeller = async (req, res) => {
 
 const createSeller = async (req, res) => {
   try {
-    const sellerData = { ...req.body };
+    const sellerData = req.body;
 
     if (req.file) {
       sellerData.imageUrl = req.file.path;
       sellerData.cloudinaryId = req.file.filename;
     }
 
-    const seller = await Seller.create(sellerData);
+    const seller = await seller.create(sellerData);
     res.status(201).json(seller);
   } catch (error) {
     console.error("createSeller error:", error);

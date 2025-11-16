@@ -1,4 +1,3 @@
-// backend/middleware/savePaymentToProduct.js
 const mongoose = require('mongoose');
 
 module.exports = async (req, res, next) => {

@@ -1,12 +1,14 @@
-const mongoose=require('mongoose');
-require('dotenv').config();
+const mongoose = require('mongoose');
 const { MONGO_URI } = require('./env.config');
 
-const connectDB=()=>{
-    mongoose
-        .connect(MONGO_URI)
-        .then(()=>console.log('DB Connected!!'))
-        .catch((error)=>console.log('DB not connected!!'));
+const connectDB = async () => {
+  await mongoose.connect(MONGO_URI, {
+    bufferTimeoutMS: 30000,
+    serverSelectionTimeoutMS: 30000,
+  });
+  return new Promise((resolve) => {
+    mongoose.connection.once('open', resolve);
+  });
 };
 
-module.exports=connectDB;
+module.exports = connectDB;

@@ -25,8 +25,14 @@ router.post('/',
     authMiddleware,
     roleMiddleware(['seller','admin']),
     checkPermission('create_product'),
+    upload.single('image'), 
     createProduct);
-    
+router.put('/:id',
+    authMiddleware,
+    roleMiddleware(['seller','admin']),
+    checkPermission('update_product'),
+    upload.single('image'), 
+    updateProduct);
 router.delete('/:id',
     authMiddleware,
     roleMiddleware(['seller','admin']),

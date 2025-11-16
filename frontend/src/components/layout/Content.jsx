@@ -1,15 +1,11 @@
-// Content.jsx – WRAPPER OFFICIALLY DEAD. FOOTER IS FREE.
 import React from 'react'
 
 const Content = () => {
   return (
     <>
-      {/* OLD WRAPPER = GONE. BURNED. NEVER COMING BACK. */}
-      {/* NO absolute, NO fixed height, NO top-115, NO z-index war */}
+      <div className="min-h-screen bg-black/95 text-white pt-32 pb-96"> 
 
-      <div className="min-h-screen bg-black/95 text-white pt-32 pb-96"> {/* pb-96 = space for footer */}
-
-        {/* SECTION 1 – CATEGORIES */}
+      
         <section className="max-w-7xl mx-auto text-center px-6">
           <h1 className="text-7xl md:text-9xl font-black leading-tight">
             Everyday<br/>
@@ -41,7 +37,7 @@ const Content = () => {
           </div>
         </section>
 
-        {/* SECTION 2 – WHY MILLIONS */}
+        
         <section className="max-w-7xl mx-auto mt-64 text-center px-6">
           <h2 className="text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-400 mb-24">
             Why Millions Shop Here
@@ -58,7 +54,7 @@ const Content = () => {
           </div>
         </section>
 
-        {/* SECTION 3 – NEW DROPS */}
+     
         <section className="max-w-7xl mx-auto mt-64 text-center px-6">
           <h2 className="text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-400 mb-24">
             New Drops This Week

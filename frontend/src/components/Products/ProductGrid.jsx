@@ -71,7 +71,7 @@ const ProductGrid = () => {
 
   return (
     <div className="h-[2900px] bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 w-screen ">
-      {/* Header */}
+   
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -84,7 +84,7 @@ const ProductGrid = () => {
         <p className="mt-3 text-lg text-amber-700">Discover innovation in every click</p>
       </motion.div>
 
-      {/* Full-Width Responsive Grid */}
+    
       <motion.div
         variants={container}
         initial="hidden"
@@ -128,7 +128,7 @@ const ProductGrid = () => {
                     },
                   }}
                 >
-                  {/* Image Container */}
+
                   <Box
                     sx={{
                       position: "relative",
@@ -155,7 +155,7 @@ const ProductGrid = () => {
                         "&:hover": { transform: "scale(1.12)" },
                       }}
                     />
-                    {/* Overlay Gradient */}
+             
                     <Box
                       sx={{
                         position: "absolute",
@@ -168,7 +168,7 @@ const ProductGrid = () => {
                         "&:hover": { opacity: 0.9 },
                       }}
                     />
-                    {/* View Details Badge */}
+                    
                     <Box
                       sx={{
                         position: "absolute",
@@ -191,7 +191,7 @@ const ProductGrid = () => {
                     </Box>
                   </Box>
 
-                  {/* Content */}
+                 
                   <CardContent
                     sx={{
                       pb: 1,

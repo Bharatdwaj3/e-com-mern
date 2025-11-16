@@ -28,7 +28,8 @@ const PERMISSIONS = {
 
         // Self
         'view_self',
-        'update_self'
+        'update_self',
+        'view-self'
     ],
 
     seller: [
@@ -41,9 +42,10 @@ const PERMISSIONS = {
         // Orders related to their products
         'view_orders',
         'update_order_status',
-
+        'update_seller',
         // Self
-        'view_self',
+        'view-self',
+        
         'update_self',
         //Customer Management
         'view_sellers',

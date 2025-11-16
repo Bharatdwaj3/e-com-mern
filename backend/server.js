@@ -29,12 +29,21 @@ require('./strategy/discord.aouth');
 const runAddPayments = require('./utils/add-payment');
 const app=express();
 
-// ←←← FIXED: Run DB + Migration BEFORE app starts
 (async () => {
   try {
-    await connectDB();                    // ← Connect first
-    await runAddPayments();               // ← Then migrate
-    console.log('DB connected + migration done');
+    await connectDB();           
+    await runAddPayments();      
+    console.log('DB + script done');
+
+    app.use(session({
+      secret: SESSION_SECRECT,
+      resave: false,
+      saveUninitialized: true,
+      store: MongoStore.create({ mongoUrl: MONGO_URI }),
+      cookie: { maxAge: 10*24*60*60*1000 }
+    }));
+
+    app.listen(PORT, () => console.log('Server Started at port : ', PORT));
   } catch (err) {
     console.error('Startup failed:', err);
     process.exit(1);

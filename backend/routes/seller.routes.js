@@ -22,13 +22,13 @@ router.post('/',
     createSeller);
 router.get('/:id',
     authUser, 
-    roleMiddleware(['seller']), 
+    roleMiddleware(['seller','admin']), 
     checkPermission('view-self'),
     getSeller);
 router.put('/profile/:id',
     upload.single('image'), 
     authUser, 
-    roleMiddleware(['admin']), 
+    roleMiddleware(['admin','seller']), 
     checkPermission('update_seller'), 
     updateSellerProfile);
 router.delete('/:id',
