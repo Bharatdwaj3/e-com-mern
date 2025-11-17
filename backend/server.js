@@ -22,9 +22,6 @@ const paymentRoutes = require("./routes/payment.routes");
 const { PORT, SESSION_SECRECT, MONGO_URI } = require('./config/env.config');
 const connectDB=require('./config/db.config');
 const morganConfig = require('./config/morgan.config');
-require('./strategy/google.aouth');
-require('./strategy/discord.aouth');
-
 
 const runAddPayments = require('./utils/add-payment');
 const app=express();

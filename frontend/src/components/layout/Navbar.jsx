@@ -88,7 +88,7 @@ useEffect(() => {
               "&:hover": { opacity: 0.8 },
             }}
           >
-            HomeQuest
+            JoyCart
           </Typography>
 
           {/* NAV LINKS */}
