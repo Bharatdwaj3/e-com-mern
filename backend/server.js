@@ -50,7 +50,7 @@ app.use(passport.session());
 
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? 'https://your-frontend.vercel.app'   
+    ? 'https://joycart-frontend.vercel.app/'   
     : 'http://localhost:5173',
   credentials: true
 }));
