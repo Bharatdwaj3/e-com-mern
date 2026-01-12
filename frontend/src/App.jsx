@@ -1,7 +1,7 @@
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import {ProductDetails, ProductGrid} from './components/products/index';
+import {ProductDetails, ProductGrid} from './components/products/index.js';
 import  {Navbar}  from './components/layout/index';
 import {Home, About} from './pages/index';
 import { BrowserRouter as Router, Routes, Route  } from 'react-router-dom'
