@@ -26,10 +26,10 @@ router.get('/:id',
     checkPermission('view-self'),
     getSeller);
 router.put('/profile/:id',
-    upload.single('image'), 
     authUser, 
     roleMiddleware(['admin','seller']), 
     checkPermission('update_seller'), 
+    upload.single('image'), 
     updateSellerProfile);
 router.delete('/:id',
     roleMiddleware(['admin']), 

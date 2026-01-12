@@ -1,4 +1,3 @@
-// src/components/Cart.jsx
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { NumericFormat } from "react-number-format";
@@ -36,7 +35,6 @@ const Cart = () => {
   const [loadingUser, setLoadingUser] = useState(true);
   const navigate = useNavigate();
 
-  // === FETCH USER FROM BACKEND (WORKS WITH httpOnly COOKIES) ===
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -52,7 +50,6 @@ const Cart = () => {
     fetchUser();
   }, []);
 
-  // === CART LOGIC ===
   const loadCart = () => {
     try {
       const stored = JSON.parse(localStorage.getItem("cartItems") || "[]");
@@ -97,7 +94,6 @@ const Cart = () => {
 
   const totalItems = cartItems.reduce((sum, item) => sum + (item.quantity || 0), 0);
 
-  // === CUSTOMER INFO FROM BACKEND USER ===
   const customerInfo = user
     ? {
         name: user.name || user.username || "Customer",
@@ -106,18 +102,17 @@ const Cart = () => {
       }
     : null;
 
-  // === EMPTY CART ===
   return (
   <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100 pt-24 pb-12">
-    {/* CENTERED CONTAINER */}
+ 
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
-      {/* TITLE */}
+  
       <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">
         Shopping Cart <span className="text-blue-600">({totalItems})</span>
       </h1>
 
-      {/* CONDITIONAL RENDERING — STILL WORKS */}
+  
       {cartItems.length === 0 ? (
         <div className="text-center py-16 bg-white rounded-xl shadow-md">
           <p className="text-xl text-gray-600 mb-6">Your cart is empty</p>
@@ -134,7 +129,7 @@ const Cart = () => {
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           
-          {/* LEFT: CART ITEMS */}
+         
           <div className="lg:col-span-2 space-y-6">
             {cartItems.map((item) => (
               <div
@@ -171,7 +166,7 @@ const Cart = () => {
             ))}
           </div>
 
-          {/* RIGHT: ORDER SUMMARY */}
+        
           <div className="lg:col-span-1">
             <div className="bg-white rounded-xl shadow-md p-6 sticky top-24">
               <Typography variant="h6" className="mb-4 font-bold">Order Summary</Typography>

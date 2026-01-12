@@ -1,4 +1,3 @@
-// src/pages/Login.jsx
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Mail, Lock } from '@mui/icons-material';
@@ -52,10 +51,7 @@ export default function Login() {
   };
 
   return (
-    // FULL PAGE CONTAINER — MUST BE 100VH + FLEX
     <div className="h-screen w-screen bg-gradient-to-br from-purple-900 via-purple-800 to-slate-900 flex items-center justify-center  p-2">
-      
-      {/* CARD — AUTO MARGIN + MAX WIDTH */}
       <div className="w-full max-w-md mx-auto p-8 bg-white/95 backdrop-blur-lg rounded-2xl shadow-2xl">
         
         <h2 className="text-3xl font-bold text-center text-slate-800 mb-2">Welcome</h2>

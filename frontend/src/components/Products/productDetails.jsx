@@ -1,4 +1,3 @@
-// src/pages/ProductDetails.jsx
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -138,7 +137,6 @@ const ProductDetails = () => {
                     </Typography>
                   )}
                 </Box>
-                // src/pages/ProductDetails.jsx (only the button part)
                 <Button
                   variant="contained"
                   color="primary"

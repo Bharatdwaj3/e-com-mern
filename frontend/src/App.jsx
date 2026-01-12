@@ -1,3 +1,6 @@
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import {ProductDetails, ProductGrid} from './components/products/index';
 import  {Navbar}  from './components/layout/index';
 import {Home, About} from './pages/index';
@@ -16,6 +19,20 @@ function App() {
     <>
       <Router>
         <Navbar/>
+
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+
         <Routes>
           <Route path='/' element={<Home/> }/>  
           <Route path='/cart' element={<Cart/>}/>
@@ -24,6 +41,7 @@ function App() {
           <Route path='/product/:id' element={<ProductDetails/>}/>    
           <Route path='/about' element={<About/>} />
           <Route path='/customer' element={<CustomerProfile/> }/>    
+          <Route path='/order-success' element={<CustomerProfile/> }/> 
           <Route path='/seller' element={<SellerProfile/> }/>      
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />

@@ -1,4 +1,3 @@
-// src/pages/Checkout.jsx   ← CREATE THIS FILE NOW
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -26,13 +25,9 @@ const Checkout = () => {
 
   const handlePayment = async () => {
     const res = await loadRazorpay();
-    if (!res) {
-      toast.error('Razorpay SDK failed to load');
-      return;
-    }
+    if (!res) return toast.error('Razorpay SDK failed to load');
 
     try {
-    
       const { data } = await axios.post('/api/payments/create-order', {
         amount: subtotal,
         cartItems,
@@ -43,54 +38,54 @@ const Checkout = () => {
         key: data.key_id,
         amount: data.amount,
         currency: 'INR',
-        name: 'Your Store Name',
-        description: 'Thank you for shopping!',
+        name: 'JoyCart',
+        description: 'Thank you for your purchase!',
         order_id: data.orderId,
         handler: async (response) => {
-          try {
-          
-            await axios.post('/api/payments/verify', {
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature,
-              cartItems,
-              customerInfo,
-              amount: subtotal,
-            });
-
-            toast.success('Payment Successful! 🎉');
-            localStorage.removeItem('cartItems'); 
-            navigate('/order-success');
-          } catch (err) {
-            toast.error('Payment verification failed',err`.message);`);
-          }
+          await axios.post('/api/payments/verify', {
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature,
+            cartItems,
+            customerInfo,
+            amount: subtotal,
+          });
+          toast.success('Payment Successful! 🎉');
+          localStorage.removeItem('cartItems');
+          navigate('/order-success');
         },
         prefill: {
           name: customerInfo.name || '',
           email: customerInfo.email || '',
           contact: customerInfo.phone || '',
         },
-        theme: { color: '#3399cc' },
+        theme: { color: '#f97316' },
       };
 
       const rzp = new window.Razorpay(options);
       rzp.open();
     } catch (err) {
-      toast.error('Payment failed',err`.message);`);
+      toast.error('Payment failed',err);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-20">
-      <div className="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow">
-        <h1 className="text-3xl font-bold mb-8">Checkout</h1>
-        <div className="text-2xl font-bold mb-8">Total: ₹{subtotal}</div>
-        <button
-          onClick={handlePayment}
-          className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 rounded-lg text-xl"
-        >
-          Pay ₹{subtotal} Now
-        </button>
+    <div className="fixed inset-0 bg-white">
+
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <div className="bg-white w-full max-w-md rounded-2xl shadow-2xl p-10 border border-gray-100">
+          <h1 className="text-4xl font-bold text-center mb-8">Checkout</h1>
+          <div className="text-3xl font-bold text-center mb-12">
+            Total: ₹{subtotal}
+          </div>
+
+          <button
+            onClick={handlePayment}
+            className="w-full bg-black hover:bg-gray-900 text-white font-bold text-xl py-6 rounded-xl transition transform hover:scale-105"
+          >
+            Pay ₹{subtotal} Now
+          </button>
+        </div>
       </div>
     </div>
   );

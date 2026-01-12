@@ -1,4 +1,3 @@
-// frontend/src/components/Navbar.jsx  ← FULLY PATCHED
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
@@ -14,7 +13,6 @@ import InputBase from "@mui/material/InputBase";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import SearchIcon from "@mui/icons-material/Search";
-import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 
 import api from "../util/api";
 ;
@@ -74,7 +72,6 @@ useEffect(() => {
     <>
       <AppBar position="fixed" sx={{ backgroundColor: "#000", boxShadow: "none", zIndex: 1300 }}>
         <Toolbar sx={{ minHeight: 64, px: { xs: 2, md: 4 } }}>
-          {/* LOGO */}
           <Typography
             component={Link}
             to="/"
@@ -91,20 +88,7 @@ useEffect(() => {
             JoyCart
           </Typography>
 
-          {/* NAV LINKS */}
           <Box sx={{ display: "flex", alignItems: "center", gap: 4, flexGrow: 1 }}>
-            <Box
-              onClick={handleMenu}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                cursor: "pointer",
-                ...linkStyle("/category"),
-                "&:hover": { color: "#00d8ff" },
-              }}
-            >
-              Categories <KeyboardArrowDownOutlinedIcon sx={{ fontSize: 18, ml: 0.5 }} />
-            </Box>
             <Typography
               component={Link}
               to="/product"

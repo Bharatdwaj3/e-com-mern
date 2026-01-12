@@ -1,25 +1,22 @@
-// src/components/Signup.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Person, Mail, Lock, Home } from '@mui/icons-material';
-import {
-  Box, Paper, Typography, TextField, Button,
-  RadioGroup, FormControlLabel, Radio,
-  InputAdornment, CircularProgress, Alert
-} from '@mui/material';
+import { Person, Mail, Lock } from '@mui/icons-material';
 
 export default function Signup() {
   const [formData, setFormData] = useState({
     userName: '',
     fullName: '',
     email: '',
-    accountType: 'customer', // ← backend values
+    accountType: 'customer',
     password: '',
     confirmPassword: '',
   });
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
+
+  navigate();
 
   const { userName, fullName, email, accountType, password, confirmPassword } = formData;
 
@@ -29,11 +26,12 @@ export default function Signup() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
     }
-    if (!userName) {
+    if (!userName.trim()) {
       setError('Username is required');
       return;
     }
@@ -50,19 +48,17 @@ export default function Signup() {
           userName,
           fullName,
           email,
-          accountType, // ← 'customer' or 'seller'
-          password
+          accountType,
+          password,
         }),
       });
 
       const data = await res.json();
-
       if (!res.ok) throw new Error(data.message || 'Registration failed');
 
       navigate('/login', {
-        state: { message: 'Check your email for verification code!' }
+        state: { message: 'Check your email for verification code!' },
       });
-
     } catch (err) {
       setError(err.message);
     } finally {
@@ -71,119 +67,143 @@ export default function Signup() {
   };
 
   return (
-    <Box className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4 pt-16">
-      <Paper className="w-full max-w-md p-8 bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl">
-        <Typography variant="h4" className="text-center font-bold text-slate-800 mb-2">
-          Create Account
-        </Typography>
-        <Typography variant="body2" className="text-center text-slate-600 mb-6">
-          Join us and get started
-        </Typography>
+    <div className="h-screen w-screen bg-gradient-to-br from-purple-900 via-purple-800 to-slate-900 flex items-center justify-center p-2">
+      
+      <div className="w-full max-w-md mx-auto p-8 bg-white/95 backdrop-blur-lg rounded-2xl shadow-2xl">
 
-        {error && <Alert severity="error" className="mb-4">{error}</Alert>}
+        <h2 className="text-3xl font-bold text-center text-slate-800 mb-2">Create Account</h2>
+        <p className="text-center text-slate-600 mb-6 text-sm">Join us and get started</p>
+
+        {error && <p className="text-red-600 text-center mb-4 font-medium">✗ {error}</p>}
 
         <form onSubmit={onSubmit} className="space-y-5">
-          <TextField
-            fullWidth
-            label="Username"
-            name="userName"
-            value={userName}
-            onChange={onChange}
-            required
-            InputProps={{
-              startAdornment: <InputAdornment position="start"><Person className="text-slate-500" /></InputAdornment>,
-            }}
-            className="[&_.MuiOutlinedInput-root]:rounded-xl [&_.MuiOutlinedInput-root]:h-14"
-          />
 
-          <TextField
-            fullWidth
-            label="Full Name"
-            name="fullName"
-            value={fullName}
-            onChange={onChange}
-            required
-            InputProps={{
-              startAdornment: <InputAdornment position="start"><Person className="text-slate-500" /></InputAdornment>,
-            }}
-            className="[&_.MuiOutlinedInput-root]:rounded-xl [&_.MuiOutlinedInput-root]:h-14"
-          />
-
-          <TextField
-            fullWidth
-            label="Email"
-            name="email"
-            type="email"
-            value={email}
-            onChange={onChange}
-            required
-            InputProps={{
-              startAdornment: <InputAdornment position="start"><Mail className="text-slate-500" /></InputAdornment>,
-            }}
-            className="[&_.MuiOutlinedInput-root]:rounded-xl [&_.MuiOutlinedInput-root]:h-14"
-          />
-
-          <Box>
-            <Typography className="mb-2 text-slate-700 font-medium">Account Type</Typography>
-            <RadioGroup value={accountType} onChange={onChange} name="accountType" row>
-              <FormControlLabel
-                value="customer"
-                control={<Radio />}
-                label={<Box className="flex items-center gap-2"><Person fontSize="small" /><span>Customer</span></Box>}
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-slate-700">Username <span className="text-red-500">*</span></label>
+            <div className="relative">
+              <Person className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" style={{ fontSize: '20px' }} />
+              <input
+                type="text"
+                name="userName"
+                value={userName}
+                onChange={onChange}
+                required
+                placeholder="olivia.green"
+                className="w-full pl-11 pr-4 py-3.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
               />
-              <FormControlLabel
-                value="seller"
-                control={<Radio />}
-                label={<Box className="flex items-center gap-2"><Person fontSize="small" /><span>Seller</span></Box>}
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-slate-700">Full Name <span className="text-red-500">*</span></label>
+            <div className="relative">
+              <Person className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" style={{ fontSize: '20px' }} />
+              <input
+                type="text"
+                name="fullName"
+                value={fullName}
+                onChange={onChange}
+                required
+                placeholder="Olivia Green"
+                className="w-full pl-11 pr-4 py-3.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
               />
-            </RadioGroup>
-          </Box>
+            </div>
+          </div>
 
-          <TextField
-            fullWidth
-            label="Password"
-            name="password"
-            type="password"
-            value={password}
-            onChange={onChange}
-            required
-            InputProps={{
-              startAdornment: <InputAdornment position="start"><Lock className="text-slate-500" /></InputAdornment>,
-            }}
-            className="[&_.MuiOutlinedInput-root]:rounded-xl [&_.MuiOutlinedInput-root]:h-14"
-          />
+          {/* EMAIL */}
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-slate-700">Email <span className="text-red-500">*</span></label>
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" style={{ fontSize: '20px' }} />
+              <input
+                type="email"
+                name="email"
+                value={email}
+                onChange={onChange}
+                required
+                placeholder="olivia.green@example.com"
+                className="w-full pl-11 pr-4 py-3.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
+              />
+            </div>
+          </div>
 
-          <TextField
-            fullWidth
-            label="Confirm Password"
-            name="confirmPassword"
-            type="password"
-            value={confirmPassword}
-            onChange={onChange}
-            required
-            InputProps={{
-              startAdornment: <InputAdornment position="start"><Lock className="text-slate-500" /></InputAdornment>,
-            }}
-            className="[&_.MuiOutlinedInput-root]:rounded-xl [&_.MuiOutlinedInput-root]:h-14"
-          />
+          <div className="space-y-3">
+            <label className="block text-sm font-medium text-slate-700">Account Type</label>
+            <div className="flex gap-8 justify-center">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="accountType"
+                  value="customer"
+                  checked={accountType === 'customer'}
+                  onChange={onChange}
+                  className="w-5 h-5 text-cyan-600"
+                />
+                <span className="text-slate-700">Customer</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="accountType"
+                  value="seller"
+                  checked={accountType === 'seller'}
+                  onChange={onChange}
+                  className="w-5 h-5 text-cyan-600"
+                />
+                <span className="text-slate-700">Seller</span>
+              </label>
+            </div>
+          </div>
 
-          <Button
-            fullWidth
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-slate-700">Password <span className="text-red-500">*</span></label>
+            <div className="relative">
+              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" style={{ fontSize: '20px' }} />
+              <input
+                type="password"
+                name="password"
+                value={password}
+                onChange={onChange}
+                required
+                placeholder="••••••••"
+                className="w-full pl-11 pr-4 py-3.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-slate-700">Confirm Password <span className="text-red-500">*</span></label>
+            <div className="relative">
+              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" style={{ fontSize: '20px' }} />
+              <input
+                type="password"
+                name="confirmPassword"
+                value={confirmPassword}
+                onChange={onChange}
+                required
+                placeholder="••••••••"
+                className="w-full pl-11 pr-4 py-3.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
+              />
+            </div>
+          </div>
+
+          <button
             type="submit"
             disabled={isLoading}
-            className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold py-3 rounded-xl text-lg normal-case shadow-lg hover:shadow-xl transition-all"
+            className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold py-3.5 rounded-xl text-lg transition-all shadow-lg hover:shadow-xl flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
           >
-            {isLoading ? <CircularProgress size={24} /> : 'Create Account'}
-          </Button>
+            {isLoading ? (
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            ) : (
+              'CREATE ACCOUNT'
+            )}
+          </button>
         </form>
 
-        <Typography className="text-center mt-6 text-slate-600">
-          Already have an account?{' '}
-          <Link to="/login" className="text-cyan-500 font-bold hover:underline">
-            Sign in
-          </Link>
-        </Typography>
-      </Paper>
-    </Box>
+        <p className="text-center mt-6 text-slate-600 text-sm">
+          Already have an account? <Link to="/login" className="text-cyan-500 font-bold hover:underline">Sign in</Link>
+        </p>
+      </div>
+    </div>
   );
 }
