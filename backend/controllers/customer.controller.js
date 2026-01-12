@@ -1,5 +1,5 @@
 const { default: mongoose } = require("mongoose");
-const Customer = require("../models/Customer.model");
+const Customer = require("../models/customer.model");
 const User = require("../models/user.model");
 const cloudinary = require("../services/cloudinary.service"); 
 const getCustomers = async (req, res) => {
